@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SportAble Calgary</title>
+<style>
+/* Layout idea: a calm, roomy guide. Pastel sport tiles carry the colour; one deep blue does all the actions. */
+:root{
+  --bg:#f6f7fa; --surface:#ffffff; --ink:#1b2233; --muted:#596277; --line:#e2e6ee;
+  --accent:#2d5b89; --accent-ink:#ffffff; --accent-soft:#e3edf8;
+  --sky:#dcebfb; --sky-i:#2c5e8f; --mint:#d5f0e3; --mint-i:#286b51; --peach:#fde2d3; --peach-i:#94461f;
+  --lilac:#e8e1f8; --lilac-i:#58449c; --butter:#f7eec6; --butter-i:#735e12; --rose:#f8dce4; --rose-i:#933853;
+  --ok:#2a7a55; --ok-bg:#dcf2e7; --warn:#8a5a0a; --warn-bg:#fbefd0; --off:#6a7184; --off-bg:#eceef3;
+  --shadow:0 1px 2px rgba(27,34,51,.05),0 8px 24px rgba(27,34,51,.06);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --r-lg:22px; --r-md:14px; --r-sm:10px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151d; --surface:#191f2a; --ink:#eef1f6; --muted:#a4acbc; --line:#2a3242;
+    --accent:#93bbe6; --accent-ink:#0e1a28; --accent-soft:#1f3046;
+    --sky:#1e3147; --sky-i:#a9cdf2; --mint:#1c3a2e; --mint-i:#9fdcbf; --peach:#3d2a20; --peach-i:#f3bf9f;
+    --lilac:#2c2646; --lilac-i:#c8b9f2; --butter:#38321d; --butter-i:#ead98f; --rose:#3c2430; --rose-i:#f0aec2;
+    --ok:#8fd9b5; --ok-bg:#1c3a2e; --warn:#ecc77a; --warn-bg:#3a3020; --off:#a4acbc; --off-bg:#262d3a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151d; --surface:#191f2a; --ink:#eef1f6; --muted:#a4acbc; --line:#2a3242;
+  --accent:#93bbe6; --accent-ink:#0e1a28; --accent-soft:#1f3046;
+  --sky:#1e3147; --sky-i:#a9cdf2; --mint:#1c3a2e; --mint-i:#9fdcbf; --peach:#3d2a20; --peach-i:#f3bf9f;
+  --lilac:#2c2646; --lilac-i:#c8b9f2; --butter:#38321d; --butter-i:#ead98f; --rose:#3c2430; --rose-i:#f0aec2;
+  --ok:#8fd9b5; --ok-bg:#1c3a2e; --warn:#ecc77a; --warn-bg:#3a3020; --off:#a4acbc; --off-bg:#262d3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+html.big{font-size:118%}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-optical-sizing:auto;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.1}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+
+/* header */
+header.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
+@media (prefers-reduced-transparency:reduce){header.top{background:var(--bg);backdrop-filter:none}}
+.bar{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;padding:8px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:1.05rem;color:var(--ink);text-decoration:none}
+.logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--sky),var(--lilac));color:var(--sky-i)}
+nav.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;margin-left:auto}
+nav.tabs a{padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+.tool{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-weight:600;font-size:.88rem;cursor:pointer}
+.tool[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+
+.demo-note{background:var(--butter);color:var(--butter-i);font-size:.86rem;padding:8px 0}
+.demo-note .wrap{display:flex;gap:8px;align-items:center}
+
+/* hero */
+.hero{padding:44px 0 20px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:end}
+.hero h1{font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.025em;font-weight:750;line-height:1.05}
+.hero h1 span{color:var(--accent)}
+.hero p.lead{margin-top:14px;font-size:1.12rem;color:var(--muted);max-width:56ch}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px}
+.fact b{display:block;font-size:1.35rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fact small{color:var(--muted);font-size:.84rem;line-height:1.35;display:block;margin-top:2px}
+
+/* steps */
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
+.steps{display:grid;gap:18px;margin:16px 0 28px}
+.step-h{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.9rem;flex:none}
+.step-h h2{font-size:1.25rem;letter-spacing:-.015em}
+.step-h p{color:var(--muted);font-size:.95rem}
+.row{display:flex;flex-wrap:wrap;gap:20px}
+.group{display:flex;flex-direction:column;gap:8px}
+.group > span{font-size:.85rem;font-weight:600;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button,.chip-btn{min-height:44px;padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:transform .1s ease-out,background .15s}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:active{transform:scale(.97)}
+
+.sports{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+.sport{min-height:96px;text-align:left;border-radius:var(--r-md);border:2px solid transparent;padding:14px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:10px;justify-content:space-between;transition:transform .1s ease-out,border-color .15s}
+.sport .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--surface) 55%,transparent)}
+.sport b{font-size:.98rem;line-height:1.2;color:var(--ink)}
+.sport[aria-pressed="true"]{border-color:var(--ink)}
+.sport[aria-pressed="true"] .ic::after{content:"";}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* results */
+.result-head{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.big-ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center}
+.big-ic svg.i{width:32px;height:32px}
+.result-head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em}
+.result-head p{color:var(--muted);max-width:62ch;margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;border:none;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:650;cursor:pointer;text-decoration:none;transition:transform .1s ease-out}
+.btn.ghost{background:var(--accent-soft);color:var(--accent)}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 6px;position:relative}
+.road-step{border-radius:var(--r-md);padding:16px;border:1px solid var(--line);background:var(--bg)}
+.road-step .k{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.road-step b{display:block;font-size:1.05rem;margin-top:4px}
+.road-step p{color:var(--muted);font-size:.9rem;margin-top:4px}
+.cols{display:grid;grid-template-columns:1.35fr 1fr;gap:22px;margin-top:24px}
+.sub-h{font-size:1.05rem;letter-spacing:-.01em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sub-h small{font-weight:500;color:var(--muted);font-size:.85rem}
+.list{display:grid;gap:10px}
+.prog{border:1px solid var(--line);border-radius:var(--r-md);padding:16px;display:grid;gap:8px;background:var(--surface)}
+.prog h3{font-size:1rem;letter-spacing:-.005em}
+.prog .org{color:var(--muted);font-size:.86rem}
+.prog p{font-size:.93rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.78rem;font-weight:650;padding:4px 10px;border-radius:999px;background:var(--off-bg);color:var(--off)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.blue{background:var(--sky);color:var(--sky-i)}
+.prog .links{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;font-weight:600}
+.gear{border-radius:var(--r-md);padding:18px;display:grid;gap:12px}
+.gear h3{font-size:1rem}
+.gear ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.gear li{display:flex;justify-content:space-between;gap:12px;font-size:.93rem;padding:10px 12px;background:color-mix(in srgb,var(--surface) 70%,transparent);border-radius:var(--r-sm)}
+.gear li span:last-child{font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}
+.src{display:grid;gap:8px}
+.src div{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;background:var(--surface)}
+.src b{font-size:.93rem}
+.src p{font-size:.88rem;color:var(--muted)}
+.fine{font-size:.8rem;color:var(--muted)}
+.help{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:22px;padding:18px;border-radius:var(--r-md);background:var(--mint);color:var(--mint-i)}
+.help b{color:var(--ink)}
+.fade{animation:fade .35s ease-out}
+@keyframes fade{from{opacity:.85;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.item{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+.item .pic{height:96px;display:grid;place-items:center}
+.item .pic svg.i{width:40px;height:40px}
+.item .body{padding:14px;display:grid;gap:8px;flex:1}
+.item h3{font-size:1rem}
+.item p{font-size:.88rem;color:var(--muted)}
+.item .btn{justify-self:start;margin-top:auto}
+
+/* donate */
+.don{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:start}
+form{display:grid;gap:14px}
+label{font-size:.88rem;font-weight:650;display:grid;gap:6px}
+input,select,textarea{font:inherit;font-weight:400;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:11px 12px;min-height:44px}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.needs{display:flex;flex-wrap:wrap;gap:8px}
+.next{counter-reset:n;display:grid;gap:10px;padding:0;margin:0;list-style:none}
+.next li{counter-increment:n;display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;font-size:.94rem}
+.next li::before{content:counter(n);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--peach);color:var(--peach-i);font-weight:700;font-size:.85rem}
+.status{border-radius:var(--r-md);padding:14px 16px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:.94rem}
+.status[hidden]{display:none}
+.err{color:var(--rose-i);font-size:.84rem;font-weight:600}
+
+/* sheet */
+dialog{border:none;border-radius:var(--r-lg);padding:0;max-width:520px;width:calc(100% - 32px);background:var(--surface);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(17,21,29,.45);backdrop-filter:blur(4px)}
+dialog[open]{animation:sheet .3s cubic-bezier(.2,.9,.3,1)}
+@keyframes sheet{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.sheet-h{padding:22px 22px 0;display:flex;justify-content:space-between;align-items:start;gap:12px}
+.sheet-h h2{font-size:1.3rem;letter-spacing:-.015em}
+.sheet-b{padding:16px 22px 22px}
+.x{width:40px;height:40px;border-radius:50%;border:none;background:var(--bg);color:var(--ink);font-size:1.2rem;cursor:pointer}
+
+footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
+.view[hidden]{display:none}
+
+@media (max-width:860px){
+  .hero,.cols,.don{grid-template-columns:1fr}
+  .road{grid-template-columns:1fr}
+  .result-head{grid-template-columns:auto 1fr}
+  .result-head .btn{grid-column:1/-1;justify-self:start}
+  nav.tabs{margin-left:0;order:3;width:100%;justify-content:space-between}
+  nav.tabs a{flex:1;text-align:center;padding:8px 6px}
+}
+@media (max-width:420px){.two,.facts{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-contrast:more){:root{--line:#7a8296;--muted:#2f3747}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#find" aria-label="SportAble home">
+      <span class="logo" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V5"/><path d="M4 5h11l-2 3.5L15 12H4"/></svg></span>
+      SportAble <span style="color:var(--muted);font-weight:500">Calgary</span>
+    </a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#find" data-view="find">Find a sport</a>
+      <a href="#library" data-view="library">Equipment library</a>
+      <a href="#donate" data-view="donate">Donate equipment</a>
+    </nav>
+    <button class="tool" id="bigText" aria-pressed="false">Larger text</button>
+  </div>
+</header>
+<div class="demo-note" role="note"><div class="wrap"><b>Hackathon demo.</b> Listings come from public program pages and may be out of date. Forms here don't send anything.</div></div>
+
+<main class="wrap">
+
+<!-- FIND -->
+<div class="view" id="v-find">
+  <div class="hero">
+    <div>
+      <h1>Adaptive sport in Calgary, <span>in three steps.</span></h1>
+      <p class="lead">Pick a sport. Tell us if you need equipment. We'll show you where to try it, where to borrow gear, and who can help pay for it. Built for athletes with disabilities and the people who support them.</p>
+    </div>
+    <div class="facts" aria-label="Why this matters">
+      <div class="fact"><b>$2,000+</b><small>Starting cost of a school sport wheelchair</small></div>
+      <div class="fact"><b>$12,000+</b><small>Cost of a wheelchair rugby chair</small></div>
+      <div class="fact"><b>$1,000+</b><small>Cost of a para hockey sled</small></div>
+      <div class="fact"><b>1 place</b><small>To find programs, gear and funding together</small></div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <section class="card" aria-labelledby="s1">
+      <div class="step-h"><span class="num">1</span><div><h2 id="s1">About you</h2><p>So we can show programs that fit.</p></div></div>
+      <div class="row">
+        <div class="group"><span id="lbl-who">I'm looking for</span>
+          <div class="seg" role="group" aria-labelledby="lbl-who" data-key="who">
+            <button aria-pressed="true" data-val="me">Myself</button>
+            <button aria-pressed="false" data-val="care">Someone I support</button>
+          </div></div>
+        <div class="group"><span id="lbl-age">Age group</span>
+          <div class="seg" role="group" aria-labelledby="lbl-age" data-key="age">
+            <button aria-pressed="false" data-val="kid">Child (under 13)</button>
+            <button aria-pressed="true" data-val="teen">Teen (13 to 17)</button>
+            <button aria-pressed="false" data-val="adult">Adult (18+)</button>
+          </div></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="s2">
+      <div class="step-h"><span class="num">2</span><div><h2 id="s2">Which sport interests you?</h2><p>Not sure yet? Pick one to explore. You can switch anytime.</p></div></div>
+      <div class="sports" id="sports"></div>
+    </section>
+
+    <section class="card" aria-labelledby="s3">
+      <div class="step-h"><span class="num">3</span><div><h2 id="s3">Do you need equipment?</h2><p>Most programs lend gear for your first sessions.</p></div></div>
+      <div class="seg" role="group" aria-labelledby="s3" data-key="gear">
+        <button aria-pressed="true" data-val="yes">Yes, I need equipment</button>
+        <button aria-pressed="false" data-val="own">I have my own</button>
+        <button aria-pressed="false" data-val="unsure">Not sure</button>
+      </div>
+    </section>
+
+    <section class="card" id="result" aria-live="polite" aria-labelledby="r-title"></section>
+  </div>
+</div>
+
+<!-- LIBRARY -->
+<div class="view" id="v-library" hidden>
+  <div class="hero" style="grid-template-columns:1fr">
+    <div>
+      <h1>Borrow the gear. <span>Keep playing.</span></h1>
+      <p class="lead">Once SportAble is funded, we'll run a lending library of donated adaptive equipment. Players borrow for a season with simple proof of need. The items below show how it will look.</p>
+    </div>
+  </div>
+  <p class="fine" style="margin-bottom:12px">Example inventory for the demo.</p>
+  <div class="lib" id="lib"></div>
+</div>
+
+<!-- DONATE -->
+<div class="view" id="v-donate" hidden>
+  <div class="hero" style="grid-template-columns:1fr">
+    <div>
+      <h1>Your old chair could be <span>someone's first game.</span></h1>
+      <p class="lead">Adaptive sport equipment is expensive and hard to find used. If you have gear you've outgrown or stopped using, we'll check it, clean it and match it to a Calgary player who needs it.</p>
+    </div>
+  </div>
+  <div class="don">
+    <section class="card" aria-labelledby="d-title">
+      <h2 id="d-title" style="font-size:1.25rem;letter-spacing:-.015em;margin-bottom:14px">Donate equipment</h2>
+      <form id="donForm" novalidate>
+        <label for="d-item">What are you donating?
+          <select id="d-item" required>
+            <option value="">Choose an item</option>
+            <option>Sport wheelchair (basketball / multisport)</option>
+            <option>Wheelchair rugby chair</option>
+            <option>Racing wheelchair</option>
+            <option>Para hockey sled and sticks</option>
+            <option>Sit-ski or mono-ski</option>
+            <option>Handcycle or adaptive bike</option>
+            <option>Boccia ramp or ball set</option>
+            <option>Other adaptive equipment</option>
+          </select>
+        </label>
+        <div class="two">
+          <label for="d-cond">Condition
+            <select id="d-cond"><option>Like new</option><option selected>Good, used</option><option>Needs repair</option></select>
+          </label>
+          <label for="d-size">Size or model (if known)
+            <input id="d-size" placeholder="e.g. 14 in. seat, youth">
+          </label>
+        </div>
+        <label for="d-photos">Photos (optional)
+          <input id="d-photos" type="file" accept="image/*" multiple>
+        </label>
+        <div class="thumbs" id="thumbs" aria-live="polite"></div>
+        <div class="two">
+          <label for="d-name">Your name
+            <input id="d-name" autocomplete="name" required>
+          </label>
+          <label for="d-email">Email
+            <input id="d-email" type="email" autocomplete="email" required>
+          </label>
+        </div>
+        <label for="d-hand">Pickup or drop-off
+          <select id="d-hand"><option>I can drop it off</option><option>Please pick it up (Calgary)</option></select>
+        </label>
+        <label for="d-notes">Anything else we should know?
+          <textarea id="d-notes" placeholder="Missing parts, history, who used it"></textarea>
+        </label>
+        <p class="err" id="d-err" hidden></p>
+        <button class="btn" type="submit" style="justify-self:start">Offer this donation</button>
+        <p class="status" id="d-ok" hidden></p>
+      </form>
+    </section>
+    <div style="display:grid;gap:18px">
+      <section class="card" aria-labelledby="need-t">
+        <h2 id="need-t" style="font-size:1.05rem;margin-bottom:12px">Most needed right now</h2>
+        <div class="needs">
+          <span class="tag blue">Youth sport wheelchairs</span>
+          <span class="tag" style="background:var(--mint);color:var(--mint-i)">Para hockey sleds and sticks</span>
+          <span class="tag" style="background:var(--lilac);color:var(--lilac-i)">Boccia ramps</span>
+          <span class="tag" style="background:var(--peach);color:var(--peach-i)">Handcycles</span>
+        </div>
+        <p class="fine" style="margin-top:10px">Example list for the demo.</p>
+      </section>
+      <section class="card" aria-labelledby="next-t">
+        <h2 id="next-t" style="font-size:1.05rem;margin-bottom:14px">What happens next</h2>
+        <ol class="next">
+          <li><span>We reply within a week to confirm the item and arrange drop-off or pickup.</span></li>
+          <li><span>A partner technician checks safety, cleans it and records the size.</span></li>
+          <li><span>It joins the lending library and goes to a player on the waitlist.</span></li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer><div class="wrap">SportAble Calgary is a student concept for the 2026 Experience Ventures Hackathon. We aim to work with Calgary Adapted Hub, Wheelchair Sports Alberta, WinSport and local clubs, not replace them.</div></footer>
+
+<dialog id="sheet" aria-labelledby="sh-title">
+  <div class="sheet-h"><div><h2 id="sh-title">Borrow from SportAble</h2><p class="fine" style="margin-top:4px">Coming once the library is funded. Try the request flow below.</p></div><button class="x" id="shClose" aria-label="Close">&times;</button></div>
+  <div class="sheet-b">
+    <form id="lendForm" novalidate>
+      <label for="l-item">Item<input id="l-item" readonly></label>
+      <div class="two">
+        <label for="l-name">Player name<input id="l-name" required></label>
+        <label for="l-age">Age<input id="l-age" type="number" min="3" max="99" required></label>
+      </div>
+      <label for="l-proof">Proof of need
+        <select id="l-proof">
+          <option>Referral from a partner program or coach</option>
+          <option>Letter from a doctor, physio or OT</option>
+          <option>Alberta Aids to Daily Living (AADL) letter</option>
+          <option>Fair Entry or KidSport approval</option>
+        </select>
+      </label>
+      <label for="l-file">Upload proof<input id="l-file" type="file" accept="image/*,.pdf"></label>
+      <label for="l-when">When do you need it?
+        <select id="l-when"><option>This season</option><option>Next season</option><option>For a try-it session only</option></select>
+      </label>
+      <p class="err" id="l-err" hidden></p>
+      <button class="btn" type="submit" style="justify-self:start">Request to borrow</button>
+      <p class="status" id="l-ok" hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<script>
+const IC={
+ ball:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12"/>',
+ puck:'<path d="M5 3l6 13h7a2 2 0 0 1 0 4H8L3 6"/><ellipse cx="17" cy="9" rx="3" ry="1.5"/>',
+ snow:'<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/>',
+ racq:'<ellipse cx="10" cy="9" rx="5.5" ry="6.5" transform="rotate(-35 10 9)"/><path d="M13.5 14 20 20.5"/><circle cx="19" cy="5" r="1.6"/>',
+ target:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>',
+ fence:'<path d="M4 20 18 6M15 4l5 5M6 15l3 3M3 21l2-2"/>',
+ wheel:'<circle cx="12" cy="13" r="7"/><circle cx="12" cy="13" r="1.5"/><path d="M12 6v5.5M12 14.5V20M5 13h5.5M13.5 13H19"/><circle cx="9" cy="3.5" r="1.4"/>',
+ bike:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M9 6h3"/>',
+ mount:'<path d="M3 20 10 7l4 6 2-3 5 10Z"/><path d="M9 9.5l1.5 1.5 1.5-2"/>',
+ wave:'<path d="M3 15c2 0 2-2 4.5-2S10 15 12 15s2-2 4.5-2S19 15 21 15M3 19c2 0 2-2 4.5-2S10 19 12 19s2-2 4.5-2S19 19 21 19"/><path d="M14 3 8 11"/><ellipse cx="15.5" cy="2.8" rx="1.6" ry="1" transform="rotate(-50 15.5 2.8)"/>',
+ bell:'<circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="12" cy="15" r="1"/>',
+ rugby:'<ellipse cx="12" cy="12" rx="9" ry="5.5" transform="rotate(-30 12 12)"/><path d="M9 14l6-4M10.5 11.5l1 1.5M12.5 10.2l1 1.5"/>',
+ bolt:'<path d="M13 2 5 13h6l-1 9 8-11h-6Z"/>',
+ swim:'<path d="M3 17c2 0 2-1.5 4.5-1.5S10 17 12 17s2-1.5 4.5-1.5S19 17 21 17"/><circle cx="16" cy="7" r="1.8"/><path d="M5 13l5-4 3 3"/>',
+ sled:'<path d="M4 15h13l3-3M6 15v3M14 15v3M3 18h17"/><circle cx="10" cy="9" r="2"/><path d="M10 11v4"/>',
+ chair:'<circle cx="9" cy="16.5" r="4.5"/><path d="M7 4v8h7l3 6M12 12V8"/><circle cx="7" cy="2.8" r="1"/>'
+};
+const ico=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
+
+/* Programs: drawn from public Calgary program pages. Details change by season. */
+const P={
+ winsport:{name:"Multisport Adapted Program",org:"WinSport",what:"Try a different wheelchair sport each week with coaches from local and provincial sport groups. Open to people with and without disabilities.",ages:["teen","adult"],cost:"Free",costK:"ok",gear:"Wheelchairs provided",url:"https://www.winsport.ca/lessons-camps-and-clubs/adapted-sport-program/",note:"Runs in seasonal sessions"},
+ city:{name:"City adaptive programs",org:"City of Calgary Recreation",what:"Learn-to-play wheelchair basketball and wheelchair multisport lessons, plus try-it sessions in sledge hockey and goalball.",ages:["kid","teen"],cost:"Fee assistance available",costK:"warn",gear:"Equipment provided",url:"https://calgary.ca/parks-rec-programs/adaptive-programs.html",note:"Lessons listed for ages 9 to 15"},
+ grizzlies:{name:"Learn 2 Play and drop-in",org:"Calgary Grizzlies Wheelchair Basketball Society",what:"Wheelchair basketball learn-to-play and drop-in sessions, run with Mount Royal University.",ages:["teen","adult"],cost:"Check with club",costK:"",gear:"Ask about chairs",note:"At Mount Royal University"},
+ wsa:{name:"Wheelchair Sports Alberta",org:"Provincial sport organization",what:"Runs wheelchair basketball, para athletics, wheelchair rugby, para ice hockey and wheelchair tennis, plus a wheelchair sports in schools program in the Calgary area.",ages:["kid","teen","adult"],cost:"Varies",costK:"",gear:"Ask about chair availability",url:"https://wheelchairsportsalberta.com/"},
+ sledge:{name:"Para hockey",org:"Calgary Sledge Hockey Association",what:"Sled hockey on the ice for players with lower-body disabilities. A partner of the Calgary Adapted Hub.",ages:["kid","teen","adult"],cost:"Check with club",costK:"",gear:"Ask about sleds"},
+ volt:{name:"Volt Hockey, Calgary Flames Division",org:"Variety Alberta",what:"Hockey played in electric sport chairs, designed for children and adults with complex disabilities.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Chairs provided by program",url:"https://varietyalberta.ca/volt/"},
+ ares:{name:"Wheelchair fencing",org:"Ares Pentathlon and Fencing Club",what:"Wheelchair fencing at the MNP Community and Sport Centre for manual and power wheelchair users.",ages:["teen","adult"],cost:"Check with club",costK:"",gear:"Ask about equipment",note:"Youth 13 to 17, adults 18+"},
+ acpsa:{name:"Learn 2 Play Boccia",org:"Alberta Cerebral Palsy Sports Association",what:"Boccia for manual and power wheelchair users of all ages, at Mount Royal University.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ramps and balls at sessions",email:"contact@acpsa.ca"},
+ rma:{name:"Rocky Mountain Adaptive",org:"Canmore and Banff area",what:"Adaptive skiing, biking, paddling and hiking with trained instructors. Free ski buddy volunteers and an adaptive equipment rental program.",ages:["kid","teen","adult"],cost:"Partly subsidized",costK:"warn",gear:"Rental program",url:"https://rockymountainadaptive.com/",note:"About an hour from Calgary"},
+ cads:{name:"Adaptive snowsports",org:"Canadian Adaptive Snowsports (CADS) Alberta",what:"Adaptive ski lessons with sit-skis, trained volunteers and help getting to the hill. Competition stream available.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Sit-skis provided"},
+ ucal:{name:"Adaptive programs",org:"UCalgary Active Living",what:"Adaptive climbing, adaptive gymnastics, one-on-one adapted activity for kids, and adaptive canoeing on Bowness Lagoon.",ages:["kid","teen","adult"],cost:"Paid programs",costK:"",gear:"Equipment provided",url:"https://active-living.ucalgary.ca/programs/kids-programs/adaptive-programs"},
+ mru:{name:"Adaptive Biking and H2Able",org:"Mount Royal University",what:"Adaptive biking and H2Able adapted swimming, run with the Calgary Adapted Hub.",ages:["kid","teen"],cost:"Check with program",costK:"",gear:"Bikes provided"},
+ aafs:{name:"Wheelchair lacrosse",org:"Autism Aspergers Friendship Society at Vivo",what:"Adapted wheelchair lacrosse at Vivo for Healthier Generations.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ask about chairs"},
+ asrab:{name:"Sport for blind and partially sighted athletes",org:"Alberta Sports and Recreation Association for the Blind",what:"Sport and recreation for people who are blind or visually impaired, all ages. Contact them for current Calgary sports.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ask program",email:"program.calgary@asrab.ab.ca"}
+};
+
+const COST="Typical new cost, from Wheelchair Sports Alberta";
+const S=[
+ {id:"wbb",name:"Wheelchair basketball",ic:"ball",c:"sky",blurb:"Fast and social. Anyone can play, including people who don't use a wheelchair day to day.",prog:["winsport","city","grizzlies","wsa"],gear:[["Multisport wheelchair","$5,000+"],["High-performance basketball chair","$7,000+"]]},
+ {id:"para",name:"Para ice hockey",ic:"sled",c:"mint",blurb:"Hockey on a sled with two short sticks you use to push and shoot.",prog:["sledge","city","winsport","wsa"],gear:[["Para hockey sled","$1,000+"],["Two picks-and-blade sticks","Varies"]]},
+ {id:"volt",name:"Volt hockey",ic:"bolt",c:"butter",blurb:"Hockey in electric sport chairs, for players with complex disabilities.",prog:["volt"],gear:[["Electric sport chair","Provided by program"]]},
+ {id:"rugby",name:"Wheelchair rugby",ic:"rugby",c:"rose",blurb:"Full-contact team sport in reinforced chairs.",prog:["winsport","wsa"],gear:[["Rugby chair","$12,000+"]]},
+ {id:"ten",name:"Wheelchair tennis",ic:"racq",c:"lilac",blurb:"Same court and rules as tennis, with two bounces allowed.",prog:["winsport","wsa"],gear:[["Multisport wheelchair","$5,000+"],["Racquet","Varies"]]},
+ {id:"boc",name:"Boccia",ic:"target",c:"peach",blurb:"A precision ball sport played seated, with a ramp option for players with limited arm movement.",prog:["acpsa","winsport"],gear:[["Boccia ball set","Varies"],["Ramp (if needed)","Varies"]]},
+ {id:"fen",name:"Wheelchair fencing",ic:"fence",c:"sky",blurb:"Fencing from a chair fixed to the floor. Quick, tactical and one-on-one.",prog:["ares","winsport"],gear:[["Fencing kit and mask","Varies"]]},
+ {id:"ski",name:"Adaptive skiing",ic:"snow",c:"mint",blurb:"Sit-skis, outriggers and trained instructors get you down the hill.",prog:["rma","cads"],gear:[["Sit-ski or mono-ski","Varies"],["Outriggers","Varies"]]},
+ {id:"ath",name:"Para athletics",ic:"wheel",c:"butter",blurb:"Wheelchair racing on the track plus seated throws.",prog:["wsa","winsport"],gear:[["Racing wheelchair","$7,000+"],["Seated throws chair","$2,500+"]]},
+ {id:"cyc",name:"Adaptive cycling",ic:"bike",c:"rose",blurb:"Handcycles and adapted bikes for trails, paths and the track.",prog:["mru","rma","winsport"],gear:[["Handcycle or adapted bike","Varies"]]},
+ {id:"clm",name:"Adaptive climbing",ic:"mount",c:"lilac",blurb:"Climbing with adapted harnesses, systems and one-on-one support.",prog:["ucal"],gear:[["Harness and shoes","Provided"]]},
+ {id:"pad",name:"Adaptive paddling",ic:"wave",c:"peach",blurb:"Canoe and kayak with adapted seating and support.",prog:["ucal","rma"],gear:[["Adapted seat and boat","Provided"]]},
+ {id:"goal",name:"Goalball",ic:"bell",c:"sky",blurb:"A team sport for athletes who are blind or partially sighted, played with a ball that has bells inside.",prog:["city","asrab"],gear:[["Eyeshades and pads","Varies"]]},
+ {id:"lax",name:"Wheelchair lacrosse",ic:"fence",c:"mint",blurb:"Lacrosse adapted for chairs. Easy to pick up, very social.",prog:["aafs","winsport"],gear:[["Multisport wheelchair","$5,000+"],["Stick","Varies"]]},
+ {id:"swim",name:"Adapted swimming",ic:"swim",c:"butter",blurb:"Pool sessions with adapted instruction and support.",prog:["mru"],gear:[["Swim aids","Provided"]]}
+];
+
+const st={who:"me",age:"teen",gear:"yes",sport:"wbb"};
+const $=s=>document.querySelector(s);
+const ageLabel={kid:"children",teen:"teens",adult:"adults"};
+
+function renderSports(){
+  $("#sports").innerHTML=S.map(s=>`<button class="sport" style="background:var(--${s.c})" aria-pressed="${s.id===st.sport}" data-id="${s.id}"><span class="ic" style="color:var(--${s.c}-i)">${ico(s.ic)}</span><b>${s.name}</b></button>`).join("");
+}
+
+function progCard(id){
+  const p=P[id], fits=p.ages.includes(st.age);
+  const tags=[`<span class="tag ${fits?"ok":""}">${fits?"Fits your age group":"Check age range"}</span>`,`<span class="tag ${p.costK}">${p.cost}</span>`,`<span class="tag blue">${p.gear}</span>`];
+  if(p.note) tags.push(`<span class="tag">${p.note}</span>`);
+  const links=[];
+  if(p.url) links.push(`<a href="${p.url}" target="_blank" rel="noopener">Visit website</a>`);
+  if(p.email) links.push(`<span>Email: ${p.email}</span>`);
+  return {fits,html:`<article class="prog"><div><h3>${p.name}</h3><div class="org">${p.org}</div></div><p>${p.what}</p><div class="tags">${tags.join("")}</div>${links.length?`<div class="links">${links.join("")}</div>`:""}</article>`};
+}
+
+function gearPanel(s){
+  const provided=s.prog.filter(id=>/provided|Rental/i.test(P[id].gear)).map(id=>P[id].org);
+  if(st.gear==="own") return `<div class="gear" style="background:var(--mint);color:var(--mint-i)"><h3 style="color:var(--ink)">You're set</h3><p style="color:var(--ink)">Bring your own equipment to any program listed. If it needs a tune-up or a better fit, ask the program coach or Wheelchair Sports Alberta.</p></div>`;
+  if(st.gear==="unsure") return `<div class="gear" style="background:var(--lilac);color:var(--lilac-i)"><h3 style="color:var(--ink)">Start with a try-it session</h3><p style="color:var(--ink)">${provided.length?`${provided.join(", ")} provide${provided.length===1?"s":""} equipment, so you can try ${s.name.toLowerCase()} before deciding what to get.`:"Ask the program what equipment they can lend for your first session."}</p></div>`;
+  return `<div class="gear" style="background:var(--${s.c});color:var(--${s.c}-i)">
+    <h3 style="color:var(--ink)">What you'll need</h3>
+    <ul>${s.gear.map(g=>`<li><span>${g[0]}</span><span>${g[1]}</span></li>`).join("")}</ul>
+    <p class="fine" style="color:var(--ink);opacity:.75">Dollar amounts: ${COST}.</p>
+  </div>
+  <div class="src">
+    <div><b>1. Use program equipment</b><p>${provided.length?provided.join(", ")+".":"Ask the program what they can lend."}</p></div>
+    <div><b>2. Rent or borrow</b><p>Rocky Mountain Adaptive runs an adaptive equipment rental program. Wheelchair Sports Alberta supplies chairs to programs, so ask about availability.</p></div>
+    <div><b>3. Get help paying</b><p>KidSport Calgary covers registration and connects families to the Calgary Flames Sports Bank. Jumpstart has run a Parasport Fund for kids 4 to 18 with disabilities.</p></div>
+    <div style="background:var(--accent-soft);border-color:transparent"><b>4. Borrow from SportAble</b><p style="margin-bottom:10px">Our lending library of donated gear, coming once funded.</p><button class="btn" data-borrow="${s.gear[0][0]}">Request to borrow</button></div>
+  </div>`;
+}
+
+function renderResult(){
+  const s=S.find(x=>x.id===st.sport);
+  const cards=s.prog.map(progCard).sort((a,b)=>b.fits-a.fits);
+  const nFit=cards.filter(c=>c.fits).length;
+  const gearStep={yes:"We list gear, costs and ways to borrow.",own:"Bring your own to any program.",unsure:"Try program gear first."}[st.gear];
+  const forWhom=st.who==="care"?`for the ${st.age==="adult"?"adult":st.age==="kid"?"child":"teen"} you support`:"for you";
+  $("#result").innerHTML=`<div class="fade">
+   <div class="result-head">
+     <div class="big-ic" style="background:var(--${s.c});color:var(--${s.c}-i)">${ico(s.ic)}</div>
+     <div><h2 id="r-title">Your roadmap: ${s.name}</h2><p>${s.blurb}</p></div>
+     <a class="btn ghost" href="#donate">Have gear to give?</a>
+   </div>
+   <div class="road">
+     <div class="road-step"><div class="k">Step 1 · Try it</div><b>${s.prog.length} place${s.prog.length>1?"s":""} to play</b><p>${nFit} list${nFit===1?"s":""} programs for ${ageLabel[st.age]}.</p></div>
+     <div class="road-step"><div class="k">Step 2 · Gear up</div><b>${st.gear==="yes"?"Equipment options":st.gear==="own"?"Using your own":"Try before you buy"}</b><p>${gearStep}</p></div>
+     <div class="road-step"><div class="k">Step 3 · Keep playing</div><b>Join a club or team</b><p>Ask your first program about regular sessions.</p></div>
+   </div>
+   <div class="cols">
+     <div><h3 class="sub-h">Where to play <small>Picked ${forWhom}</small></h3><div class="list">${cards.map(c=>c.html).join("")}</div></div>
+     <div><h3 class="sub-h">Equipment</h3><div style="display:grid;gap:12px">${gearPanel(s)}</div></div>
+   </div>
+   <div class="help"><div><b>Want to talk it through with a person?</b><br>Calgary Adapted Hub offers a free one-on-one program navigation call for families.</div><a class="btn" href="https://www.calgaryadaptedhub.com" target="_blank" rel="noopener" style="background:var(--mint-i);color:var(--surface)">Visit Calgary Adapted Hub</a></div>
+  </div>`;
+}
+
+/* library */
+const LIB=[
+ ["Youth sport wheelchair","chair","sky","12 to 14 in. seat. Good for basketball, tennis and multisport.","Available","ok"],
+ ["Adult multisport wheelchair","chair","lilac","16 in. seat. Adjustable camber.","On loan","warn"],
+ ["Para hockey sled and sticks","sled","mint","Adjustable youth sled with two sticks.","Available","ok"],
+ ["Sit-ski with outriggers","snow","butter","For adaptive skiing lessons at partner hills.","On loan","warn"],
+ ["Handcycle","bike","rose","Adult handcycle for paths and trails.","Needed","off"],
+ ["Boccia ramp and ball set","target","peach","Full competition set with ramp.","Available","ok"],
+ ["Racing wheelchair","wheel","sky","Three-wheel racing chair, adult size.","Needed","off"]
+];
+function renderLib(){
+  $("#lib").innerHTML=LIB.map(([n,ic,c,d,stt,k])=>`<article class="item"><div class="pic" style="background:var(--${c});color:var(--${c}-i)">${ico(ic)}</div><div class="body"><div class="tags"><span class="tag ${k}">${stt}</span></div><h3>${n}</h3><p>${d}</p>${stt==="Needed"?`<a class="btn ghost" href="#donate">Donate one</a>`:`<button class="btn ${stt==="On loan"?"ghost":""}" data-borrow="${n}">${stt==="On loan"?"Join waitlist":"Request to borrow"}</button>`}</div></article>`).join("");
+}
+
+/* events */
+document.addEventListener("click",e=>{
+  const seg=e.target.closest(".seg button");
+  if(seg){const g=seg.parentElement;g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b===seg));st[g.dataset.key]=seg.dataset.val;renderResult();return}
+  const sp=e.target.closest(".sport");
+  if(sp){st.sport=sp.dataset.id;document.querySelectorAll(".sport").forEach(b=>b.setAttribute("aria-pressed",b===sp));renderResult();return}
+  const br=e.target.closest("[data-borrow]");
+  if(br){openSheet(br.dataset.borrow)}
+});
+const sheet=$("#sheet");
+function openSheet(item){
+  $("#l-item").value=item;$("#l-ok").hidden=true;$("#l-err").hidden=true;
+  try{sheet.showModal()}catch(_){sheet.setAttribute("open","")}
+}
+$("#shClose").onclick=()=>sheet.close();
+sheet.addEventListener("click",e=>{if(e.target===sheet)sheet.close()});
+$("#lendForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("#l-name").value.trim(),age=$("#l-age").value;
+  if(!name||!age){$("#l-err").textContent="Add the player's name and age to continue.";$("#l-err").hidden=false;return}
+  $("#l-err").hidden=true;
+  $("#l-ok").textContent=`Request saved in this demo for ${name}. In the live platform, our team checks proof within 3 business days and emails pickup details.`;
+  $("#l-ok").hidden=false;
+});
+$("#d-photos").addEventListener("change",e=>{
+  const t=$("#thumbs");t.innerHTML="";
+  [...e.target.files].slice(0,6).forEach(f=>{const i=new Image();i.alt="Photo of donated item";i.src=URL.createObjectURL(f);t.appendChild(i)});
+});
+$("#donForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const item=$("#d-item").value,name=$("#d-name").value.trim(),em=$("#d-email").value.trim();
+  const miss=[];if(!item)miss.push("the item");if(!name)miss.push("your name");if(!/^\S+@\S+\.\S+$/.test(em))miss.push("a valid email");
+  if(miss.length){$("#d-err").textContent="Please add "+miss.join(", ")+".";$("#d-err").hidden=false;$("#d-ok").hidden=true;return}
+  $("#d-err").hidden=true;
+  $("#d-ok").textContent=`Thanks, ${name}. Your ${item.toLowerCase()} is recorded in this demo. In the live platform we'd email ${em} within a week.`;
+  $("#d-ok").hidden=false;
+});
+$("#bigText").onclick=e=>{const on=document.documentElement.classList.toggle("big");e.currentTarget.setAttribute("aria-pressed",on)};
+
+/* views */
+function route(){
+  const v=(location.hash||"#find").slice(1);
+  const view=["find","library","donate"].includes(v)?v:"find";
+  ["find","library","donate"].forEach(x=>$("#v-"+x).hidden=x!==view);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.dataset.view===view)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+}
+window.addEventListener("hashchange",()=>{route();window.scrollTo(0,0)});
+renderSports();renderResult();renderLib();route();
+</script>
+</body>
+</html>

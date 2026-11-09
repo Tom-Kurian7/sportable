@@ -137,7 +137,35 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .fade{animation:fade .35s ease-out}
 @keyframes fade{from{opacity:.85;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-/* library */
+.prog .links,.contact .links{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;font-size:.9rem;font-weight:600}
+a.call{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--mint);color:var(--mint-i);text-decoration:none;font-variant-numeric:tabular-nums}
+a.call svg.i,.mail svg.i{width:16px;height:16px}
+.mail{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-weight:500;word-break:break-all}
+.pn{font-weight:500;color:var(--muted);font-size:.82rem}
+.contacts{display:grid;gap:8px}
+.contact{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;background:var(--surface);display:grid;gap:6px}
+.contact b{font-size:.95rem}
+.contact p{font-size:.88rem;color:var(--muted)}
+.contact .addr{color:var(--ink)}
+.guide{display:grid;gap:12px}
+.g-item{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
+.g-item summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px}
+.g-item summary::-webkit-details-marker{display:none}
+.g-item summary .big-ic{width:52px;height:52px;border-radius:14px}
+.g-item summary h3{font-size:1.1rem;letter-spacing:-.01em}
+.g-item summary p{color:var(--muted);font-size:.9rem}
+.g-item summary .chev{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--bg);transition:transform .2s ease-out}
+.g-item[open] summary .chev{transform:rotate(180deg)}
+.g-body{padding:0 18px 20px;display:grid;gap:16px}
+.g-what{font-size:1rem;max-width:70ch}
+.g-cost{display:inline-flex;gap:8px;align-items:center;font-weight:650;font-size:.9rem;padding:8px 12px;border-radius:var(--r-sm);font-variant-numeric:tabular-nums;justify-self:start}
+.g-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g-box{border-radius:var(--r-md);padding:14px 16px;background:var(--bg)}
+.g-box h4{margin:0 0 8px;font-size:.92rem}
+.g-box ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:.92rem}
+.g-start{border-radius:var(--r-md);padding:14px 16px;background:var(--accent-soft);font-size:.95rem}
+.g-start b{color:var(--accent)}
+/* library-css */
 .lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .item{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
 .item .pic{height:96px;display:grid;place-items:center}
@@ -179,7 +207,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
 .view[hidden]{display:none}
 
 @media (max-width:860px){
-  .hero,.cols,.don{grid-template-columns:1fr}
+  .hero,.cols,.don,.g-grid{grid-template-columns:1fr}
   .road{grid-template-columns:1fr}
   .result-head{grid-template-columns:auto 1fr}
   .result-head .btn{grid-column:1/-1;justify-self:start}
@@ -200,8 +228,9 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
     </a>
     <nav class="tabs" aria-label="Sections">
       <a href="#find" data-view="find">Find a sport</a>
-      <a href="#library" data-view="library">Equipment library</a>
-      <a href="#donate" data-view="donate">Donate equipment</a>
+      <a href="#guide" data-view="guide">Equipment guide</a>
+      <a href="#library" data-view="library">Library</a>
+      <a href="#donate" data-view="donate">Donate</a>
     </nav>
     <button class="tool" id="bigText" aria-pressed="false">Larger text</button>
   </div>
@@ -259,6 +288,22 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
 
     <section class="card" id="result" aria-live="polite" aria-labelledby="r-title"></section>
   </div>
+</div>
+
+<!-- GUIDE -->
+<div class="view" id="v-guide" hidden>
+  <div class="hero" style="grid-template-columns:1fr">
+    <div>
+      <h1>Know your gear <span>before you borrow or buy.</span></h1>
+      <p class="lead">What each piece of adaptive equipment does, how it should fit, what to check on used gear, and who in Calgary to call. A coach or seating specialist should always do the final fitting.</p>
+    </div>
+  </div>
+  <div class="guide" id="guide"></div>
+  <section class="card" style="margin-top:22px" aria-labelledby="dir-t">
+    <h2 id="dir-t" style="font-size:1.2rem;letter-spacing:-.015em;margin-bottom:6px">Equipment contacts in one place</h2>
+    <p class="fine" style="margin-bottom:14px">Numbers from each organization's public pages. Call ahead, since programs change by season.</p>
+    <div class="contacts" id="directory" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))"></div>
+  </section>
 </div>
 
 <!-- LIBRARY -->
@@ -400,33 +445,107 @@ const IC={
  bolt:'<path d="M13 2 5 13h6l-1 9 8-11h-6Z"/>',
  swim:'<path d="M3 17c2 0 2-1.5 4.5-1.5S10 17 12 17s2-1.5 4.5-1.5S19 17 21 17"/><circle cx="16" cy="7" r="1.8"/><path d="M5 13l5-4 3 3"/>',
  sled:'<path d="M4 15h13l3-3M6 15v3M14 15v3M3 18h17"/><circle cx="10" cy="9" r="2"/><path d="M10 11v4"/>',
+ phone:'<path d="M5 4h3l2 5-2 1.5a11 11 0 0 0 5.5 5.5L15 14l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
+ mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/>',
  chair:'<circle cx="9" cy="16.5" r="4.5"/><path d="M7 4v8h7l3 6M12 12V8"/><circle cx="7" cy="2.8" r="1"/>'
 };
 const ico=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
 
 /* Programs: drawn from public Calgary program pages. Details change by season. */
 const P={
- winsport:{name:"Multisport Adapted Program",org:"WinSport",what:"Try a different wheelchair sport each week with coaches from local and provincial sport groups. Open to people with and without disabilities.",ages:["teen","adult"],cost:"Free",costK:"ok",gear:"Wheelchairs provided",url:"https://www.winsport.ca/lessons-camps-and-clubs/adapted-sport-program/",note:"Runs in seasonal sessions"},
- city:{name:"City adaptive programs",org:"City of Calgary Recreation",what:"Learn-to-play wheelchair basketball and wheelchair multisport lessons, plus try-it sessions in sledge hockey and goalball.",ages:["kid","teen"],cost:"Fee assistance available",costK:"warn",gear:"Equipment provided",url:"https://calgary.ca/parks-rec-programs/adaptive-programs.html",note:"Lessons listed for ages 9 to 15"},
+ winsport:{name:"Multisport Adapted Program",org:"WinSport",what:"Try a different wheelchair sport each week with coaches from local and provincial sport groups. Open to people with and without disabilities.",ages:["teen","adult"],cost:"Free",costK:"ok",gear:"Wheelchairs provided",url:"https://www.winsport.ca/lessons-camps-and-clubs/adapted-sport-program/",phone:"403-247-5452",email:"info@winsport.ca",note:"Runs in seasonal sessions"},
+ city:{name:"City adaptive programs",org:"City of Calgary Recreation",what:"Learn-to-play wheelchair basketball and wheelchair multisport lessons, plus try-it sessions in sledge hockey and goalball.",ages:["kid","teen"],cost:"Fee assistance available",costK:"warn",gear:"Equipment provided",url:"https://calgary.ca/parks-rec-programs/adaptive-programs.html",phone:"403-268-3800",phoneNote:"option 1, registration",note:"Lessons listed for ages 9 to 15"},
  grizzlies:{name:"Learn 2 Play and drop-in",org:"Calgary Grizzlies Wheelchair Basketball Society",what:"Wheelchair basketball learn-to-play and drop-in sessions, run with Mount Royal University.",ages:["teen","adult"],cost:"Check with club",costK:"",gear:"Ask about chairs",note:"At Mount Royal University"},
- wsa:{name:"Wheelchair Sports Alberta",org:"Provincial sport organization",what:"Runs wheelchair basketball, para athletics, wheelchair rugby, para ice hockey and wheelchair tennis, plus a wheelchair sports in schools program in the Calgary area.",ages:["kid","teen","adult"],cost:"Varies",costK:"",gear:"Ask about chair availability",url:"https://wheelchairsportsalberta.com/"},
- sledge:{name:"Para hockey",org:"Calgary Sledge Hockey Association",what:"Sled hockey on the ice for players with lower-body disabilities. A partner of the Calgary Adapted Hub.",ages:["kid","teen","adult"],cost:"Check with club",costK:"",gear:"Ask about sleds"},
- volt:{name:"Volt Hockey, Calgary Flames Division",org:"Variety Alberta",what:"Hockey played in electric sport chairs, designed for children and adults with complex disabilities.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Chairs provided by program",url:"https://varietyalberta.ca/volt/"},
+ wsa:{name:"Wheelchair Sports Alberta",org:"Provincial sport organization",what:"Runs wheelchair basketball, para athletics, wheelchair rugby, para ice hockey and wheelchair tennis, plus a wheelchair sports in schools program in the Calgary area.",ages:["kid","teen","adult"],cost:"Varies",costK:"",gear:"Ask about chair availability",url:"https://wheelchairsportsalberta.com/",phone:"780-427-8699",phoneNote:"Edmonton office"},
+ sledge:{name:"Para hockey and free Try-It sessions",org:"Calgary Sledge Hockey Association",what:"Calgary's para ice hockey club, with novice, recreational and competitive teams. Free Try-It sessions are open to all ages and abilities.",ages:["kid","teen","adult"],cost:"Try-It sessions free",costK:"ok",gear:"Ask about sleds",email:"calgarysledgehockey@gmail.com"},
+ volt:{name:"Volt Hockey, Calgary Flames Division",org:"Variety Alberta",what:"3-on-3 hockey in joystick-controlled electric sport chairs on a gym floor, designed for children and adults with complex disabilities. The Calgary team has played at Vecova Recreation Centre.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Chairs provided by program",url:"https://varietyalberta.ca/volt/",email:"volt.coordinator@varietyalberta.ca"},
+ power:{name:"Calgary PowerHockey League",org:"Power wheelchair hockey",what:"Floor hockey for manual and power wheelchair users.",ages:["teen","adult"],cost:"Check with league",costK:"",gear:"Use your own chair",email:"info@powerhockey.ca",note:"Ages 12 and up"},
  ares:{name:"Wheelchair fencing",org:"Ares Pentathlon and Fencing Club",what:"Wheelchair fencing at the MNP Community and Sport Centre for manual and power wheelchair users.",ages:["teen","adult"],cost:"Check with club",costK:"",gear:"Ask about equipment",note:"Youth 13 to 17, adults 18+"},
  acpsa:{name:"Learn 2 Play Boccia",org:"Alberta Cerebral Palsy Sports Association",what:"Boccia for manual and power wheelchair users of all ages, at Mount Royal University.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ramps and balls at sessions",email:"contact@acpsa.ca"},
- rma:{name:"Rocky Mountain Adaptive",org:"Canmore and Banff area",what:"Adaptive skiing, biking, paddling and hiking with trained instructors. Free ski buddy volunteers and an adaptive equipment rental program.",ages:["kid","teen","adult"],cost:"Partly subsidized",costK:"warn",gear:"Rental program",url:"https://rockymountainadaptive.com/",note:"About an hour from Calgary"},
- cads:{name:"Adaptive snowsports",org:"Canadian Adaptive Snowsports (CADS) Alberta",what:"Adaptive ski lessons with sit-skis, trained volunteers and help getting to the hill. Competition stream available.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Sit-skis provided"},
- ucal:{name:"Adaptive programs",org:"UCalgary Active Living",what:"Adaptive climbing, adaptive gymnastics, one-on-one adapted activity for kids, and adaptive canoeing on Bowness Lagoon.",ages:["kid","teen","adult"],cost:"Paid programs",costK:"",gear:"Equipment provided",url:"https://active-living.ucalgary.ca/programs/kids-programs/adaptive-programs"},
+ rma:{name:"Rocky Mountain Adaptive",org:"Canmore and Banff area",what:"Adaptive skiing, biking, paddling and hiking with trained instructors. Rents trail riders, handcycles, tandem bikes, kayaks, canoes and paddleboards.",ages:["kid","teen","adult"],cost:"Partly subsidized",costK:"warn",gear:"Rental program",url:"https://rockymountainadaptive.com/",phone:"403-431-1354",phoneNote:"call or text",email:"info@rockymountainadaptive.com",note:"About an hour from Calgary"},
+ cads:{name:"Adaptive ski and snowboard lessons",org:"CADS Calgary",what:"Volunteer-run adaptive ski and snowboard lessons at WinSport, with sit-skis and trained instructors. Programs typically run as eight 2-hour sessions on Friday evenings in January and February.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Sit-skis provided",url:"https://cadsalberta.ca/programs/",phone:"403-286-8050",phoneNote:"call or text",email:"info@cadscalgary.ca",note:"Ages 6 and up"},
+ ucal:{name:"Adaptive programs",org:"UCalgary Active Living",what:"Adaptive climbing, adaptive gymnastics, one-on-one adapted activity for kids, and adaptive canoeing on Bowness Lagoon.",ages:["kid","teen","adult"],cost:"Paid programs",costK:"",gear:"Equipment provided",url:"https://active-living.ucalgary.ca/programs/kids-programs/adaptive-programs",phone:"403-220-7010",phoneNote:"Gymnastics Centre"},
  mru:{name:"Adaptive Biking and H2Able",org:"Mount Royal University",what:"Adaptive biking and H2Able adapted swimming, run with the Calgary Adapted Hub.",ages:["kid","teen"],cost:"Check with program",costK:"",gear:"Bikes provided"},
- aafs:{name:"Wheelchair lacrosse",org:"Autism Aspergers Friendship Society at Vivo",what:"Adapted wheelchair lacrosse at Vivo for Healthier Generations.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ask about chairs"},
+ aafs:{name:"Wheelchair lacrosse",org:"Autism Aspergers Friendship Society at Vivo",what:"Adapted wheelchair lacrosse at Vivo for Healthier Generations.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ask about chairs",phone:"403-246-7383",email:"info@aafscalgary.com"},
  asrab:{name:"Sport for blind and partially sighted athletes",org:"Alberta Sports and Recreation Association for the Blind",what:"Sport and recreation for people who are blind or visually impaired, all ages. Contact them for current Calgary sports.",ages:["kid","teen","adult"],cost:"Check with program",costK:"",gear:"Ask program",email:"program.calgary@asrab.ab.ca"}
 };
 
+/* Who to call for equipment */
+const C={
+ sportsbank:{name:"KidSport Calgary and Calgary Flames Sports Bank",what:"Free, gently used sports equipment for kids 18 and under from low-income families, plus registration grants. Approval for KidSport also qualifies you for the Sports Bank. Mainly standard gear like helmets, gloves and pads, not adaptive chairs.",phone:"403-202-0251",email:"kidsport@kidsportcalgary.ca",addr:"3557 52 St SE, Calgary"},
+ rma:{name:"Rocky Mountain Adaptive Rentals",what:"Single-day rentals of handcycles, trail riders, tandem bikes and adaptive paddling gear. A 30 to 60 minute orientation is required.",phone:"403-431-1354",email:"info@rockymountainadaptive.com",addr:"168-105 Bow Meadows Cres, Canmore"},
+ cads:{name:"CADS Calgary",what:"Sit-skis and adaptive snow gear used in their lessons at WinSport.",phone:"403-286-8050",email:"info@cadscalgary.ca"},
+ wsa:{name:"Wheelchair Sports Alberta",what:"Provincial body for wheelchair sports. Supplies sport chairs to programs and can point you to clubs and chairs.",phone:"780-427-8699",addr:"Edmonton office"},
+ winsport:{name:"WinSport Adapted Program",what:"Owns sport wheelchairs in several sizes for its free try-it program.",phone:"403-247-5452",email:"info@winsport.ca"},
+ maxhc:{name:"Maximum Healthcare and Mobility",what:"Calgary mobility vendor that helped WinSport order its sport wheelchairs. Ask about sport chair fittings and quotes.",phone:"403-769-6166",addr:"25-47 Aero Dr NE, Calgary"},
+ aadl:{name:"Alberta Aids to Daily Living (AADL)",what:"Provincial program that helps pay for everyday mobility equipment. It does not usually cover sport-only gear, but an AADL letter can serve as proof of need.",phone:"780-427-0731",phoneNote:"in Alberta, dial 310-0000 first for toll-free"},
+ sledge:{name:"Calgary Sledge Hockey Association",what:"Calgary's para ice hockey club. Ask about free Try-It sessions and borrowing a sled.",email:"calgarysledgehockey@gmail.com"},
+ variety:{name:"Variety Alberta Volt Hockey",what:"Runs Volt hockey in Calgary and provides the chairs.",email:"volt.coordinator@varietyalberta.ca",url:"https://varietyalberta.ca/volt/"},
+ acpsa:{name:"Alberta Cerebral Palsy Sports Association",what:"Runs Learn 2 Play Boccia with balls and ramps at sessions.",email:"contact@acpsa.ca"},
+ asrab:{name:"Alberta Sports and Recreation Association for the Blind",what:"Sport for people who are blind or visually impaired, including gear for blind sports.",email:"program.calgary@asrab.ab.ca"},
+ cah:{name:"Calgary Adapted Hub",what:"Free one-on-one program navigation for families of children and youth with disabilities, ages 4 to 24.",url:"https://www.calgaryadaptedhub.com"}
+};
+
 const COST="Typical new cost, from Wheelchair Sports Alberta";
+/* Equipment guide. General guidance only: a coach or seating specialist should do the final fitting. */
+const G={
+ chair:{name:"Sport wheelchair",sub:"Basketball, tennis, lacrosse and multisport",ic:"chair",c:"sky",cost:"$2,000+ school chair, $5,000+ multisport, $7,000+ high-performance basketball",
+  what:"A light, low chair built for quick turns. The big wheels tilt inward at the bottom (called camber) so the chair is stable and turns fast, and a small anti-tip wheel at the back stops it flipping backward.",
+  fit:["Seat width should be snug: your hips lightly touch the sides so the chair moves with you.","Knees usually sit a little higher than hips for balance. A coach sets this.","Straps at the waist, thighs or feet keep you secure. Bring them up at your fitting.","Basketball chairs have a front bumper. Tennis chairs are lighter and often have extra anti-tip wheels."],
+  used:["Check the frame for cracks or bends, especially near welds.","Spin each wheel. It should run smooth and straight with no wobble.","Make sure the quick-release axles click in firmly.","Look at tires and push rims for wear.","Measure the seat width and depth before you go. Size is the number one reason a used chair doesn't work."],
+  start:"Don't buy first. Try program chairs at WinSport or a City lesson, then get measured.",call:["winsport","wsa","maxhc"]},
+ rugby:{name:"Wheelchair rugby chair",sub:"Wheelchair rugby",ic:"rugby",c:"rose",cost:"$12,000+",
+  what:"A heavy-duty chair built for contact. Offensive chairs have a rounded front bumper and wings so they can't be hooked. Defensive chairs have a front bar for blocking and hooking.",
+  fit:["Your classification and role (offence or defence) decide which style you need.","Strapping is tighter than in other sports since there is a lot of contact.","Fitting should be done by an experienced coach or seating specialist."],
+  used:["Check bumpers and wings for cracks.","Inspect welds closely. Rugby chairs take hard hits.","Confirm the seat size matches your measurements."],
+  start:"These are the most expensive chairs in para sport. Always borrow through a club or program before considering a purchase.",call:["wsa","winsport"]},
+ racing:{name:"Racing wheelchair",sub:"Para athletics",ic:"wheel",c:"butter",cost:"$7,000+",
+  what:"A long three-wheeled chair for track and road racing. A steering lever (called a compensator) lets you hold a line around turns, and small push rims let you hit them at high speed.",
+  fit:["You sit low or kneel, depending on the chair and your body.","The cage around your legs should be snug so you don't slide.","Push rim size affects speed and effort. Your coach will help choose.","Racing gloves are needed to push the rims."],
+  used:["Check the front wheel and fork for straightness.","Make sure the compensator moves and locks properly.","Inspect the long frame for cracks."],
+  start:"Contact Wheelchair Sports Alberta about para athletics programs and chairs to try.",call:["wsa"]},
+ sled:{name:"Para hockey sled and sticks",sub:"Para (sledge) ice hockey",ic:"sled",c:"mint",cost:"$1,000+ sled, sticks extra",
+  what:"A bucket seat on a metal frame with two skate blades underneath. You hold two short sticks. One end has a blade for shooting and the other has metal picks you dig into the ice to push.",
+  fit:["Blade height and spacing affect balance. Wider and lower is more stable for beginners.","Straps go across the hips, knees and feet.","Sticks should let you push and shoot without leaning too far.","You also need a hockey helmet with a cage, gloves and padding."],
+  used:["Check blades for rust, nicks and that they are firmly attached.","Make sure the bucket is not cracked and straps hold.","Check the picks on the sticks are sharp and secure."],
+  start:"Calgary Sledge Hockey runs free Try-It sessions. Ask about borrowing a sled. KidSport and the Flames Sports Bank may help with helmets and pads.",call:["sledge","sportsbank","wsa"]},
+ sitski:{name:"Sit-ski (mono-ski or bi-ski)",sub:"Adaptive skiing",ic:"snow",c:"lilac",cost:"Varies widely, usually several thousand dollars",
+  what:"A seat mounted on one ski (mono-ski) or two skis (bi-ski). Bi-skis are more stable and are often guided by an instructor with tethers. Mono-skis need more balance and upper-body strength. Outriggers are short poles with small skis on the end for balance.",
+  fit:["The seat should hold you snugly with straps at the hips and legs.","Bi-ski is usually the starting point for beginners.","Lift loading needs training, so take lessons first."],
+  used:["Rarely bought used by beginners. Rent or use program equipment."],
+  start:"Take lessons with CADS Calgary at WinSport or Rocky Mountain Adaptive. They provide sit-skis and trained volunteers.",call:["cads","rma"]},
+ handcycle:{name:"Handcycle and adaptive bike",sub:"Adaptive cycling",ic:"bike",c:"peach",cost:"Varies by type",
+  what:"Bikes you pedal with your arms (handcycles), or adapted bikes and trikes for extra stability. Some handcycles clip onto the front of a daily wheelchair. Others are full recumbent bikes.",
+  fit:["The hand cranks should line up near shoulder height when you're seated.","Brakes and gears must be reachable without straining.","Trikes and tandems suit riders who need extra balance or support."],
+  used:["Test the brakes first.","Check the chain and gears shift cleanly.","Check tires and frame for damage."],
+  start:"Rent for a day from Rocky Mountain Adaptive (orientation required) or try Mount Royal University's adaptive biking program.",call:["rma"]},
+ boccia:{name:"Boccia balls and ramp",sub:"Boccia",ic:"target",c:"peach",cost:"Varies",
+  what:"A set of 6 red, 6 blue and 1 white target ball. Players who can't throw use a ramp to roll the ball, guided by an assistant who faces away from the court. Some players use a head or hand pointer.",
+  fit:["Ball softness affects how they roll and stop. Players often try several.","Ramp users need an assistant and practice to aim together."],
+  used:["Check balls hold their shape.","Make sure the ramp is stable and not warped."],
+  start:"Alberta Cerebral Palsy Sports Association runs Learn 2 Play Boccia with equipment at sessions.",call:["acpsa"]},
+ volt:{name:"Volt and power hockey chairs",sub:"Volt hockey and power hockey",ic:"bolt",c:"butter",cost:"Provided by program",
+  what:"Volt chairs are battery-powered sport chairs driven by a joystick, with a hockey blade attached to the front. If you can work a joystick, you can play. Power hockey is played in your own power chair.",
+  fit:["Joystick position is adjusted to your hand.","Volt chairs all go the same speed, so the game is even."],
+  used:["Not usually bought by players. Programs own the chairs."],
+  start:"Email Variety Alberta's Volt coordinator to try a session.",call:["variety"]},
+ goalball:{name:"Goalball gear",sub:"Goalball",ic:"bell",c:"sky",cost:"Low for players",
+  what:"Players wear blackout eyeshades so everyone is equal, plus knee, elbow and hip pads for diving. The ball has bells inside so players can track it by sound.",
+  fit:["Eyeshades must fully block light.","Pads should not slip when you dive."],
+  used:["Check pads are intact and eyeshades seal well."],
+  start:"Contact ASRAB or try goalball through City of Calgary adaptive programs.",call:["asrab"]},
+ fencing:{name:"Wheelchair fencing kit",sub:"Wheelchair fencing",ic:"fence",c:"lilac",cost:"Varies",
+  what:"Fencers sit in chairs locked into a floor frame, so the chairs don't move. You need a mask, jacket, glove and a weapon (foil, épée or sabre).",
+  fit:["The club adjusts the frame distance between fencers.","The jacket and mask must fit properly for safety."],
+  used:["Masks must have no dents or holes in the mesh.","Jackets should have no tears."],
+  start:"Ask Ares Pentathlon and Fencing Club about borrowing kit for your first sessions.",call:["wsa"]}
+};
+const SG={wbb:["chair"],para:["sled"],volt:["volt"],rugby:["rugby"],ten:["chair"],boc:["boccia"],fen:["fencing"],ski:["sitski"],ath:["racing"],cyc:["handcycle"],clm:[],pad:[],goal:["goalball"],lax:["chair"],swim:[]};
+
 const S=[
  {id:"wbb",name:"Wheelchair basketball",ic:"ball",c:"sky",blurb:"Fast and social. Anyone can play, including people who don't use a wheelchair day to day.",prog:["winsport","city","grizzlies","wsa"],gear:[["Multisport wheelchair","$5,000+"],["High-performance basketball chair","$7,000+"]]},
  {id:"para",name:"Para ice hockey",ic:"sled",c:"mint",blurb:"Hockey on a sled with two short sticks you use to push and shoot.",prog:["sledge","city","winsport","wsa"],gear:[["Para hockey sled","$1,000+"],["Two picks-and-blade sticks","Varies"]]},
- {id:"volt",name:"Volt hockey",ic:"bolt",c:"butter",blurb:"Hockey in electric sport chairs, for players with complex disabilities.",prog:["volt"],gear:[["Electric sport chair","Provided by program"]]},
+ {id:"volt",name:"Volt and power hockey",ic:"bolt",c:"butter",blurb:"Hockey in electric sport chairs or your own power chair, for players with complex disabilities.",prog:["volt","power"],gear:[["Volt sport chair","Provided by program"],["Your own power chair","For power hockey"]]},
  {id:"rugby",name:"Wheelchair rugby",ic:"rugby",c:"rose",blurb:"Full-contact team sport in reinforced chairs.",prog:["winsport","wsa"],gear:[["Rugby chair","$12,000+"]]},
  {id:"ten",name:"Wheelchair tennis",ic:"racq",c:"lilac",blurb:"Same court and rules as tennis, with two bounces allowed.",prog:["winsport","wsa"],gear:[["Multisport wheelchair","$5,000+"],["Racquet","Varies"]]},
  {id:"boc",name:"Boccia",ic:"target",c:"peach",blurb:"A precision ball sport played seated, with a ramp option for players with limited arm movement.",prog:["acpsa","winsport"],gear:[["Boccia ball set","Varies"],["Ramp (if needed)","Varies"]]},
@@ -449,13 +568,23 @@ function renderSports(){
   $("#sports").innerHTML=S.map(s=>`<button class="sport" style="background:var(--${s.c})" aria-pressed="${s.id===st.sport}" data-id="${s.id}"><span class="ic" style="color:var(--${s.c}-i)">${ico(s.ic)}</span><b>${s.name}</b></button>`).join("");
 }
 
+function tel(n){return n.replace(/[^0-9]/g,"")}
+function contactLinks(o){
+  const l=[];
+  if(o.phone) l.push(`<a class="call" href="tel:+1${tel(o.phone)}">${ico("phone")}<span>${o.phone}</span></a>${o.phoneNote?`<span class="pn">${o.phoneNote}</span>`:""}`);
+  if(o.email) l.push(`<span class="mail">${ico("mail")}<span>${o.email}</span></span>`);
+  if(o.url) l.push(`<a href="${o.url}" target="_blank" rel="noopener">Visit website</a>`);
+  return l;
+}
+function cCard(k){
+  const c=C[k];
+  return `<div class="contact"><b>${c.name}</b><p>${c.what}</p>${c.addr?`<p class="addr">${c.addr}</p>`:""}<div class="links">${contactLinks(c).join("")}</div></div>`;
+}
 function progCard(id){
   const p=P[id], fits=p.ages.includes(st.age);
   const tags=[`<span class="tag ${fits?"ok":""}">${fits?"Fits your age group":"Check age range"}</span>`,`<span class="tag ${p.costK}">${p.cost}</span>`,`<span class="tag blue">${p.gear}</span>`];
   if(p.note) tags.push(`<span class="tag">${p.note}</span>`);
-  const links=[];
-  if(p.url) links.push(`<a href="${p.url}" target="_blank" rel="noopener">Visit website</a>`);
-  if(p.email) links.push(`<span>Email: ${p.email}</span>`);
+  const links=contactLinks(p);
   return {fits,html:`<article class="prog"><div><h3>${p.name}</h3><div class="org">${p.org}</div></div><p>${p.what}</p><div class="tags">${tags.join("")}</div>${links.length?`<div class="links">${links.join("")}</div>`:""}</article>`};
 }
 
@@ -469,11 +598,19 @@ function gearPanel(s){
     <p class="fine" style="color:var(--ink);opacity:.75">Dollar amounts: ${COST}.</p>
   </div>
   <div class="src">
-    <div><b>1. Use program equipment</b><p>${provided.length?provided.join(", ")+".":"Ask the program what they can lend."}</p></div>
-    <div><b>2. Rent or borrow</b><p>Rocky Mountain Adaptive runs an adaptive equipment rental program. Wheelchair Sports Alberta supplies chairs to programs, so ask about availability.</p></div>
-    <div><b>3. Get help paying</b><p>KidSport Calgary covers registration and connects families to the Calgary Flames Sports Bank. Jumpstart has run a Parasport Fund for kids 4 to 18 with disabilities.</p></div>
-    <div style="background:var(--accent-soft);border-color:transparent"><b>4. Borrow from SportAble</b><p style="margin-bottom:10px">Our lending library of donated gear, coming once funded.</p><button class="btn" data-borrow="${s.gear[0][0]}">Request to borrow</button></div>
-  </div>`;
+    <div><b>1. Try program equipment first</b><p>${provided.length?provided.join(", ")+" provide"+(provided.length===1?"s":"")+" gear for sessions.":"Ask the program what they can lend."}</p></div>
+    ${(SG[s.id]||[]).map(g=>`<div style="background:var(--${G[g].c});border-color:transparent"><b>2. Read the ${G[g].name.toLowerCase()} guide</b><p style="color:var(--ink)">How it should fit, what to check on used gear, and who to call.</p><button class="btn" style="margin-top:10px" data-guide="${g}">Open the guide</button></div>`).join("")}
+    <div style="background:var(--accent-soft);border-color:transparent"><b>3. Borrow from SportAble</b><p style="margin-bottom:10px">Our lending library of donated gear, coming once funded.</p><button class="btn" data-borrow="${s.gear[0][0]}">Request to borrow</button></div>
+  </div>
+  <h3 class="sub-h" style="margin-top:8px">Who to call</h3>
+  <div class="contacts">${callList(s).map(cCard).join("")}</div>`;
+}
+function callList(s){
+  const keys=new Set();
+  (SG[s.id]||[]).forEach(g=>G[g].call.forEach(k=>keys.add(k)));
+  if(["kid","teen"].includes(st.age)) keys.add("sportsbank");
+  keys.add("aadl");
+  return [...keys];
 }
 
 function renderResult(){
@@ -515,12 +652,31 @@ function renderLib(){
   $("#lib").innerHTML=LIB.map(([n,ic,c,d,stt,k])=>`<article class="item"><div class="pic" style="background:var(--${c});color:var(--${c}-i)">${ico(ic)}</div><div class="body"><div class="tags"><span class="tag ${k}">${stt}</span></div><h3>${n}</h3><p>${d}</p>${stt==="Needed"?`<a class="btn ghost" href="#donate">Donate one</a>`:`<button class="btn ${stt==="On loan"?"ghost":""}" data-borrow="${n}">${stt==="On loan"?"Join waitlist":"Request to borrow"}</button>`}</div></article>`).join("");
 }
 
+function renderGuide(){
+  $("#guide").innerHTML=Object.entries(G).map(([k,g])=>`<details class="g-item" id="g-${k}">
+    <summary><span class="big-ic" style="background:var(--${g.c});color:var(--${g.c}-i)">${ico(g.ic)}</span><span><h3>${g.name}</h3><p>${g.sub}</p></span><span class="chev" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+    <div class="g-body">
+      <p class="g-what">${g.what}</p>
+      <span class="g-cost" style="background:var(--${g.c});color:var(--${g.c}-i)">Typical cost: ${g.cost}</span>
+      <div class="g-grid">
+        <div class="g-box"><h4>How it should fit</h4><ul>${g.fit.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+        <div class="g-box"><h4>Checking used or borrowed gear</h4><ul>${g.used.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+      </div>
+      <div class="g-start"><b>Where to start:</b> ${g.start}</div>
+      <div><h4 style="margin:0 0 8px;font-size:.92rem">Who to call</h4><div class="contacts">${g.call.map(cCard).join("")}</div></div>
+    </div>
+  </details>`).join("");
+  $("#directory").innerHTML=Object.keys(C).map(cCard).join("");
+}
+
 /* events */
 document.addEventListener("click",e=>{
   const seg=e.target.closest(".seg button");
   if(seg){const g=seg.parentElement;g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b===seg));st[g.dataset.key]=seg.dataset.val;renderResult();return}
   const sp=e.target.closest(".sport");
   if(sp){st.sport=sp.dataset.id;document.querySelectorAll(".sport").forEach(b=>b.setAttribute("aria-pressed",b===sp));renderResult();return}
+  const gd=e.target.closest("[data-guide]");
+  if(gd){const id="g-"+gd.dataset.guide;location.hash="guide";setTimeout(()=>{const el=document.getElementById(id);if(el){el.open=true;el.scrollIntoView({block:"start",behavior:"smooth"})}},60);return}
   const br=e.target.closest("[data-borrow]");
   if(br){openSheet(br.dataset.borrow)}
 });
@@ -557,12 +713,12 @@ $("#bigText").onclick=e=>{const on=document.documentElement.classList.toggle("bi
 /* views */
 function route(){
   const v=(location.hash||"#find").slice(1);
-  const view=["find","library","donate"].includes(v)?v:"find";
-  ["find","library","donate"].forEach(x=>$("#v-"+x).hidden=x!==view);
+  const view=["find","guide","library","donate"].includes(v)?v:"find";
+  ["find","guide","library","donate"].forEach(x=>$("#v-"+x).hidden=x!==view);
   document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.dataset.view===view)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
 }
 window.addEventListener("hashchange",()=>{route();window.scrollTo(0,0)});
-renderSports();renderResult();renderLib();route();
+renderSports();renderResult();renderLib();renderGuide();route();
 </script>
 </body>
 </html>

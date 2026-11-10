@@ -4,259 +4,336 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SportAble Calgary</title>
+<meta name="description" content="Adaptive sport in Calgary, in three steps. Find where to play, borrow equipment, and who to call.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SportAble Calgary">
+<meta property="og:title" content="SportAble Calgary">
+<meta property="og:description" content="Adaptive sport in Calgary, in three steps. Find where to play, borrow equipment, and who to call.">
+<meta property="og:url" content="https://tom-kurian7.github.io/sportable/">
+<meta property="og:image" content="https://tom-kurian7.github.io/sportable/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SportAble Calgary">
+<meta name="twitter:description" content="Adaptive sport in Calgary, in three steps.">
+<meta name="twitter:image" content="https://tom-kurian7.github.io/sportable/og-image.png">
+<meta name="theme-color" content="#2f5f8e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237fb3ea'/%3E%3Cstop offset='1' stop-color='%23a99be6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M10 25V8h13l-2.5 4.5L23 17H10' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
-/* Layout idea: a calm, roomy guide. Pastel sport tiles carry the colour; one deep blue does all the actions. */
+/* Layout idea: one calm column of content on a soft background. Pastel only on icons and small highlights; one deep blue for every action. */
 :root{
-  --bg:#f6f7fa; --surface:#ffffff; --ink:#1b2233; --muted:#596277; --line:#e2e6ee;
-  --accent:#2d5b89; --accent-ink:#ffffff; --accent-soft:#e3edf8;
-  --sky:#dcebfb; --sky-i:#2c5e8f; --mint:#d5f0e3; --mint-i:#286b51; --peach:#fde2d3; --peach-i:#94461f;
-  --lilac:#e8e1f8; --lilac-i:#58449c; --butter:#f7eec6; --butter-i:#735e12; --rose:#f8dce4; --rose-i:#933853;
-  --ok:#2a7a55; --ok-bg:#dcf2e7; --warn:#8a5a0a; --warn-bg:#fbefd0; --off:#6a7184; --off-bg:#eceef3;
-  --shadow:0 1px 2px rgba(27,34,51,.05),0 8px 24px rgba(27,34,51,.06);
+  --bg:#f8f9fc; --surface:#ffffff; --ink:#1c2230; --muted:#667085; --faint:#98a2b3; --line:#eceef2;
+  --accent:#2f5f8e; --accent-ink:#ffffff; --accent-soft:#eaf1f9;
+  --sky:#d3e8fd; --sky-i:#215a92; --mint:#c9efdc; --mint-i:#1f6648; --peach:#fdd9c5; --peach-i:#8d3f15;
+  --lilac:#e2d8fa; --lilac-i:#4f3b98; --butter:#faecb0; --butter-i:#66500a; --rose:#fbd3df; --rose-i:#8c2e4c;
+  --ok:#2b6e52; --ok-bg:#def3e9; --warn:#7f560c; --warn-bg:#f8f1d4; --off:#667085; --off-bg:#f1f2f5;
   --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --r-lg:22px; --r-md:14px; --r-sm:10px;
+  --r-lg:20px; --r-md:14px; --r-sm:10px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#11151d; --surface:#191f2a; --ink:#eef1f6; --muted:#a4acbc; --line:#2a3242;
-    --accent:#93bbe6; --accent-ink:#0e1a28; --accent-soft:#1f3046;
-    --sky:#1e3147; --sky-i:#a9cdf2; --mint:#1c3a2e; --mint-i:#9fdcbf; --peach:#3d2a20; --peach-i:#f3bf9f;
-    --lilac:#2c2646; --lilac-i:#c8b9f2; --butter:#38321d; --butter-i:#ead98f; --rose:#3c2430; --rose-i:#f0aec2;
-    --ok:#8fd9b5; --ok-bg:#1c3a2e; --warn:#ecc77a; --warn-bg:#3a3020; --off:#a4acbc; --off-bg:#262d3a;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    --bg:#12161d; --surface:#1a1f28; --ink:#edf0f5; --muted:#a3abba; --faint:#7c8596; --line:#272e3a;
+    --accent:#93bbe6; --accent-ink:#0f1a28; --accent-soft:#1e2c3e;
+    --sky:#1d2e42; --sky-i:#a9cdf2; --mint:#1b3529; --mint-i:#9fdcbf; --peach:#3a281f; --peach-i:#f3bf9f;
+    --lilac:#29243f; --lilac-i:#c8b9f2; --butter:#33301f; --butter-i:#ead98f; --rose:#38232d; --rose-i:#f0aec2;
+    --ok:#9fdcbf; --ok-bg:#1b3529; --warn:#ecc77a; --warn-bg:#33301f; --off:#a3abba; --off-bg:#232a35;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#11151d; --surface:#191f2a; --ink:#eef1f6; --muted:#a4acbc; --line:#2a3242;
-  --accent:#93bbe6; --accent-ink:#0e1a28; --accent-soft:#1f3046;
-  --sky:#1e3147; --sky-i:#a9cdf2; --mint:#1c3a2e; --mint-i:#9fdcbf; --peach:#3d2a20; --peach-i:#f3bf9f;
-  --lilac:#2c2646; --lilac-i:#c8b9f2; --butter:#38321d; --butter-i:#ead98f; --rose:#3c2430; --rose-i:#f0aec2;
-  --ok:#8fd9b5; --ok-bg:#1c3a2e; --warn:#ecc77a; --warn-bg:#3a3020; --off:#a4acbc; --off-bg:#262d3a;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  --bg:#12161d; --surface:#1a1f28; --ink:#edf0f5; --muted:#a3abba; --faint:#7c8596; --line:#272e3a;
+  --accent:#93bbe6; --accent-ink:#0f1a28; --accent-soft:#1e2c3e;
+  --sky:#1d2e42; --sky-i:#a9cdf2; --mint:#1b3529; --mint-i:#9fdcbf; --peach:#3a281f; --peach-i:#f3bf9f;
+  --lilac:#29243f; --lilac-i:#c8b9f2; --butter:#33301f; --butter-i:#ead98f; --rose:#38232d; --rose-i:#f0aec2;
+  --ok:#9fdcbf; --ok-bg:#1b3529; --warn:#ecc77a; --warn-bg:#33301f; --off:#a3abba; --off-bg:#232a35;
   color-scheme:dark;
 }
+html{font-size:100%;-webkit-text-size-adjust:100%}
 html.big{font-size:118%}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);font-optical-sizing:auto;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-optical-sizing:auto;font-size:1.03rem;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}
-h1,h2,h3{text-wrap:balance;margin:0;line-height:1.1}
+h1,h2,h3,h4{text-wrap:balance;margin:0;line-height:1.2;letter-spacing:-.01em}
 p{margin:0}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.view[hidden]{display:none}
 
 /* header */
-header.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
+header.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);border-bottom:1px solid var(--line)}
 @media (prefers-reduced-transparency:reduce){header.top{background:var(--bg);backdrop-filter:none}}
-.bar{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;padding:8px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:1.05rem;color:var(--ink);text-decoration:none}
-.logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--sky),var(--lilac));color:var(--sky-i)}
-nav.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;margin-left:auto}
-nav.tabs a{padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem}
-nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
-.tool{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-weight:600;font-size:.88rem;cursor:pointer}
-.tool[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
-
-.demo-note{background:var(--butter);color:var(--butter-i);font-size:.86rem;padding:8px 0}
-.demo-note .wrap{display:flex;gap:8px;align-items:center}
+.bar{display:flex;align-items:center;gap:12px;padding:12px 20px 0;max-width:880px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;color:var(--ink);text-decoration:none;margin-right:auto}
+.brand small{color:var(--muted);font-weight:500;font-size:inherit}
+.logo{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink)}
+.logo svg.i{width:18px;height:18px}
+.tool{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;min-height:36px;padding:0 14px;font:inherit;font-weight:600;font-size:.85rem;cursor:pointer}
+.tool[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:10px 20px 10px;max-width:880px;margin:0 auto}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{flex:none;padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem;white-space:nowrap}
+nav.tabs a:hover{color:var(--ink)}
+nav.tabs a[aria-current="page"]{background:var(--ink);color:var(--surface)}
+.demo-note{font-size:.82rem;color:var(--muted);padding:14px 0 0}
+.demo-note b{color:var(--ink);font-weight:600}
 
 /* hero */
-.hero{padding:44px 0 20px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:end}
-.hero h1{font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.025em;font-weight:750;line-height:1.05}
+.hero{padding:28px 0 8px}
+.hero h1{font-size:clamp(1.9rem,6vw,2.8rem);letter-spacing:-.025em;line-height:1.08;font-weight:750}
 .hero h1 span{color:var(--accent)}
-.hero p.lead{margin-top:14px;font-size:1.12rem;color:var(--muted);max-width:56ch}
-.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px}
-.fact b{display:block;font-size:1.35rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.fact small{color:var(--muted);font-size:.84rem;line-height:1.35;display:block;margin-top:2px}
+.lead{margin-top:14px;font-size:1.08rem;color:var(--muted);max-width:58ch}
+.stats{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.stat b{display:block;font-size:1.15rem;font-variant-numeric:tabular-nums}
+.stat small{font-size:.82rem;color:var(--muted)}
 
-/* steps */
-section.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
-.steps{display:grid;gap:18px;margin:16px 0 28px}
-.step-h{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
-.num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.9rem;flex:none}
-.step-h h2{font-size:1.25rem;letter-spacing:-.015em}
-.step-h p{color:var(--muted);font-size:.95rem}
-.row{display:flex;flex-wrap:wrap;gap:20px}
-.group{display:flex;flex-direction:column;gap:8px}
+/* builder */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:8px 24px;margin:24px 0 8px}
+.q{padding:22px 0;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:none}
+.q-h{display:flex;gap:12px;align-items:baseline;margin-bottom:14px}
+.num{font-size:.8rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 9px;flex:none}
+.q-h h2{font-size:1.15rem}
+.q-h p{color:var(--muted);font-size:.92rem;margin-top:2px}
+.row{display:grid;gap:16px}
+.group{display:grid;gap:8px}
 .group > span{font-size:.85rem;font-weight:600;color:var(--muted)}
-.seg{display:flex;flex-wrap:wrap;gap:8px}
-.seg button,.chip-btn{min-height:44px;padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:transform .1s ease-out,background .15s}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:600;font-size:.94rem;cursor:pointer;transition:transform .1s ease-out,background .15s}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 button:active{transform:scale(.97)}
-
-.sports{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
-.sport{min-height:96px;text-align:left;border-radius:var(--r-md);border:2px solid transparent;padding:14px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:10px;justify-content:space-between;transition:transform .1s ease-out,border-color .15s}
-.sport .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--surface) 55%,transparent)}
-.sport b{font-size:.98rem;line-height:1.2;color:var(--ink)}
-.sport[aria-pressed="true"]{border-color:var(--ink)}
-.sport[aria-pressed="true"] .ic::after{content:"";}
-svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sports{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.sport{min-height:56px;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 12px 8px 8px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);font:inherit;font-size:.95rem;font-weight:600;color:var(--ink);cursor:pointer;transition:transform .1s ease-out,border-color .15s,background .15s}
+.sport .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;flex:none}
+.sport:hover{border-color:var(--faint)}
+.sport[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
 
 /* results */
-.result-head{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
-.big-ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center}
-.big-ic svg.i{width:32px;height:32px}
-.result-head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em}
-.result-head p{color:var(--muted);max-width:62ch;margin-top:4px}
-.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;border:none;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:650;cursor:pointer;text-decoration:none;transition:transform .1s ease-out}
-.btn.ghost{background:var(--accent-soft);color:var(--accent)}
-.road{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 6px;position:relative}
-.road-step{border-radius:var(--r-md);padding:16px;border:1px solid var(--line);background:var(--bg)}
-.road-step .k{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.road-step b{display:block;font-size:1.05rem;margin-top:4px}
-.road-step p{color:var(--muted);font-size:.9rem;margin-top:4px}
-.cols{display:grid;grid-template-columns:1.35fr 1fr;gap:22px;margin-top:24px}
-.sub-h{font-size:1.05rem;letter-spacing:-.01em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.sub-h small{font-weight:500;color:var(--muted);font-size:.85rem}
+#result{padding:28px 0 8px}
+.r-head{display:flex;gap:16px;align-items:center}
+.big-ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;flex:none}
+.big-ic svg.i{width:28px;height:28px}
+.r-head .eyebrow{font-size:.8rem;font-weight:600;color:var(--muted)}
+.r-head h2{font-size:clamp(1.45rem,4.5vw,1.9rem);letter-spacing:-.02em}
+.r-blurb{color:var(--muted);margin-top:12px;max-width:62ch}
+.road{display:grid;gap:0;margin:22px 0 0;padding:0;list-style:none;border-left:2px solid var(--line);margin-left:10px}
+.road li{position:relative;padding:0 0 16px 22px}
+.road li:last-child{padding-bottom:0}
+.road li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.road b{display:block;font-size:.98rem}
+.road span{color:var(--muted);font-size:.9rem}
+.sec{margin-top:34px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+.sec-h h3{font-size:1.1rem}
+.sec-h small{color:var(--muted);font-size:.85rem}
 .list{display:grid;gap:10px}
-.prog{border:1px solid var(--line);border-radius:var(--r-md);padding:16px;display:grid;gap:8px;background:var(--surface)}
-.prog h3{font-size:1rem;letter-spacing:-.005em}
-.prog .org{color:var(--muted);font-size:.86rem}
-.prog p{font-size:.93rem}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:.78rem;font-weight:650;padding:4px 10px;border-radius:999px;background:var(--off-bg);color:var(--off)}
-.tag.ok{background:var(--ok-bg);color:var(--ok)}
-.tag.warn{background:var(--warn-bg);color:var(--warn)}
-.tag.blue{background:var(--sky);color:var(--sky-i)}
-.prog .links{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;font-weight:600}
-.gear{border-radius:var(--r-md);padding:18px;display:grid;gap:12px}
-.gear h3{font-size:1rem}
-.gear ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
-.gear li{display:flex;justify-content:space-between;gap:12px;font-size:.93rem;padding:10px 12px;background:color-mix(in srgb,var(--surface) 70%,transparent);border-radius:var(--r-sm)}
-.gear li span:last-child{font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}
-.src{display:grid;gap:8px}
-.src div{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;background:var(--surface)}
-.src b{font-size:.93rem}
-.src p{font-size:.88rem;color:var(--muted)}
-.fine{font-size:.8rem;color:var(--muted)}
-.help{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:22px;padding:18px;border-radius:var(--r-md);background:var(--mint);color:var(--mint-i)}
-.help b{color:var(--ink)}
-.fade{animation:fade .35s ease-out}
-@keyframes fade{from{opacity:.85;transform:translateY(4px)}to{opacity:1;transform:none}}
-
-.prog .links,.contact .links{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;font-size:.9rem;font-weight:600}
-a.call{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--mint);color:var(--mint-i);text-decoration:none;font-variant-numeric:tabular-nums}
+.prog{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px 18px 16px;display:grid;gap:8px}
+.prog h4{font-size:1.02rem}
+.prog .org{color:var(--muted);font-size:.86rem;margin-top:1px}
+.prog p.desc{font-size:.95rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--off-bg);color:var(--off)}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}
+.links{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;font-size:.9rem;font-weight:600;padding-top:4px}
+a.call{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);text-decoration:none;font-variant-numeric:tabular-nums}
 a.call svg.i,.mail svg.i{width:16px;height:16px}
 .mail{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-weight:500;word-break:break-all}
 .pn{font-weight:500;color:var(--muted);font-size:.82rem}
-.contacts{display:grid;gap:8px}
-.contact{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;background:var(--surface);display:grid;gap:6px}
-.contact b{font-size:.95rem}
-.contact p{font-size:.88rem;color:var(--muted)}
-.contact .addr{color:var(--ink)}
-.guide{display:grid;gap:12px}
-.g-item{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
-.g-item summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px}
+a.web{text-decoration:none}
+.need{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:4px 18px}
+.need li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.need li:last-child{border-bottom:none}
+.need ul{margin:0;padding:0;list-style:none}
+.need li span:last-child{font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}
+.fine{font-size:.8rem;color:var(--muted);margin-top:8px}
+.paths{display:grid;gap:10px;margin-top:12px}
+.path{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line)}
+.path .n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:.8rem;font-weight:700;flex:none;margin-top:1px}
+.path b{display:block;font-size:.96rem}
+.path p{font-size:.9rem;color:var(--muted);margin-top:2px}
+.path .btn{margin-top:10px}
+.note-box{padding:16px 18px;border-radius:var(--r-md);background:var(--mint);color:var(--ink)}
+.note-box b{display:block;margin-bottom:2px}
+.contacts{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:0 18px}
+.contact{padding:16px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.contact:last-child{border-bottom:none}
+.contact b{font-size:.98rem}
+.contact p{font-size:.9rem;color:var(--muted)}
+.contact .addr{color:var(--ink);font-size:.88rem}
+.help{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:34px;padding:20px;border-radius:var(--r-md);background:var(--accent-soft)}
+.help p{color:var(--muted);font-size:.92rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:none;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:650;font-size:.95rem;cursor:pointer;text-decoration:none;transition:transform .1s ease-out}
+.btn.ghost{background:var(--accent-soft);color:var(--accent)}
+.fade{animation:fade .3s ease-out}
+@keyframes fade{from{opacity:.85;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* guide */
+.guide{display:grid;gap:10px;margin-top:24px}
+.g-item{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+.g-item summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:center;padding:14px 16px}
 .g-item summary::-webkit-details-marker{display:none}
-.g-item summary .big-ic{width:52px;height:52px;border-radius:14px}
-.g-item summary h3{font-size:1.1rem;letter-spacing:-.01em}
-.g-item summary p{color:var(--muted);font-size:.9rem}
-.g-item summary .chev{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--bg);transition:transform .2s ease-out}
-.g-item[open] summary .chev{transform:rotate(180deg)}
-.g-body{padding:0 18px 20px;display:grid;gap:16px}
-.g-what{font-size:1rem;max-width:70ch}
-.g-cost{display:inline-flex;gap:8px;align-items:center;font-weight:650;font-size:.9rem;padding:8px 12px;border-radius:var(--r-sm);font-variant-numeric:tabular-nums;justify-self:start}
-.g-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.g-box{border-radius:var(--r-md);padding:14px 16px;background:var(--bg)}
-.g-box h4{margin:0 0 8px;font-size:.92rem}
-.g-box ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:.92rem}
-.g-start{border-radius:var(--r-md);padding:14px 16px;background:var(--accent-soft);font-size:.95rem}
+.g-item summary .big-ic{width:44px;height:44px;border-radius:12px}
+.g-item summary .big-ic svg.i{width:22px;height:22px}
+.g-item summary .t{flex:1;min-width:0}
+.g-item summary h3{font-size:1.02rem}
+.g-item summary p{color:var(--muted);font-size:.88rem}
+.chev{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:transform .2s ease-out;flex:none}
+.g-item[open] .chev{transform:rotate(180deg)}
+.g-body{padding:4px 18px 20px;display:grid;gap:18px;border-top:1px solid var(--line);margin:0 0 0}
+.g-body > :first-child{margin-top:14px}
+.g-cost{font-size:.9rem;color:var(--muted)}
+.g-cost b{color:var(--ink);font-variant-numeric:tabular-nums}
+.g-body h4{font-size:.92rem;margin-bottom:8px}
+.g-body ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:.95rem}
+.g-body ul li::marker{color:var(--faint)}
+.g-start{padding:14px 16px;border-radius:var(--r-sm);background:var(--accent-soft);font-size:.95rem}
 .g-start b{color:var(--accent)}
-/* library-css */
-.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.item{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
-.item .pic{height:96px;display:grid;place-items:center}
-.item .pic svg.i{width:40px;height:40px}
-.item .body{padding:14px;display:grid;gap:8px;flex:1}
+.g-body .contacts{border:none;padding:0;background:transparent}
+.g-body .contact{padding:12px 0}
+.dir{margin-top:34px}
+
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:20px}
+.item{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);padding:16px;display:grid;gap:10px;align-content:start}
+.item .top{display:flex;justify-content:space-between;align-items:center}
+.item .big-ic{width:44px;height:44px;border-radius:12px}
+.item .big-ic svg.i{width:22px;height:22px}
 .item h3{font-size:1rem}
-.item p{font-size:.88rem;color:var(--muted)}
-.item .btn{justify-self:start;margin-top:auto}
+.item p{font-size:.9rem;color:var(--muted)}
+.item .btn{justify-self:start}
 
 /* donate */
-.don{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:start}
+.don{display:grid;gap:16px;margin-top:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px}
+.card h2{font-size:1.15rem;margin-bottom:14px}
 form{display:grid;gap:14px}
-label{font-size:.88rem;font-weight:650;display:grid;gap:6px}
-input,select,textarea{font:inherit;font-weight:400;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:11px 12px;min-height:44px}
-textarea{min-height:84px;resize:vertical}
+label{font-size:.88rem;font-weight:600;display:grid;gap:6px}
+input,select,textarea{font:inherit;font-size:1rem;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;min-height:46px;width:100%}
+textarea{min-height:88px;resize:vertical}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .thumbs{display:flex;gap:8px;flex-wrap:wrap}
 .thumbs img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
-.needs{display:flex;flex-wrap:wrap;gap:8px}
-.next{counter-reset:n;display:grid;gap:10px;padding:0;margin:0;list-style:none}
-.next li{counter-increment:n;display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;font-size:.94rem}
-.next li::before{content:counter(n);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--peach);color:var(--peach-i);font-weight:700;font-size:.85rem}
-.status{border-radius:var(--r-md);padding:14px 16px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:.94rem}
-.status[hidden]{display:none}
-.err{color:var(--rose-i);font-size:.84rem;font-weight:600}
+.needs{display:flex;flex-wrap:wrap;gap:6px}
+.next{counter-reset:n;display:grid;gap:12px;padding:0;margin:0;list-style:none}
+.next li{counter-increment:n;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;font-size:.95rem}
+.next li::before{content:counter(n);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.8rem}
+.status{border-radius:var(--r-sm);padding:12px 14px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:.94rem}
+.status[hidden],.err[hidden]{display:none}
+.err{color:var(--rose-i);font-size:.86rem;font-weight:600}
 
 /* sheet */
-dialog{border:none;border-radius:var(--r-lg);padding:0;max-width:520px;width:calc(100% - 32px);background:var(--surface);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.25)}
-dialog::backdrop{background:rgba(17,21,29,.45);backdrop-filter:blur(4px)}
-dialog[open]{animation:sheet .3s cubic-bezier(.2,.9,.3,1)}
-@keyframes sheet{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+dialog{border:none;border-radius:var(--r-lg);padding:0;max-width:520px;width:calc(100% - 24px);max-height:calc(100% - 24px);background:var(--surface);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(17,21,29,.4);backdrop-filter:blur(3px)}
+dialog[open]{animation:sheet .28s cubic-bezier(.2,.9,.3,1)}
+@keyframes sheet{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .sheet-h{padding:22px 22px 0;display:flex;justify-content:space-between;align-items:start;gap:12px}
-.sheet-h h2{font-size:1.3rem;letter-spacing:-.015em}
+.sheet-h h2{font-size:1.25rem}
 .sheet-b{padding:16px 22px 22px}
-.x{width:40px;height:40px;border-radius:50%;border:none;background:var(--bg);color:var(--ink);font-size:1.2rem;cursor:pointer}
+.x{width:40px;height:40px;border-radius:50%;border:none;background:var(--bg);color:var(--ink);font-size:1.2rem;cursor:pointer;flex:none}
 
-footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
-.view[hidden]{display:none}
+footer{padding:40px 0 56px;color:var(--muted);font-size:.84rem}
 
-@media (max-width:860px){
-  .hero,.cols,.don,.g-grid{grid-template-columns:1fr}
-  .road{grid-template-columns:1fr}
-  .result-head{grid-template-columns:auto 1fr}
-  .result-head .btn{grid-column:1/-1;justify-self:start}
-  nav.tabs{margin-left:0;order:3;width:100%;justify-content:space-between}
-  nav.tabs a{flex:1;text-align:center;padding:8px 6px}
+@media (min-width:720px){
+  .row{grid-template-columns:auto 1fr}
+  .don{grid-template-columns:1.3fr 1fr;align-items:start}
 }
-@media (max-width:420px){.two,.facts{grid-template-columns:1fr}}
+@media (max-width:560px){
+  body{font-size:1rem}
+  .wrap{padding:0 16px}
+  .bar{padding:10px 16px 0}
+  nav.tabs{padding:8px 12px 10px}
+  .panel{padding:4px 16px;border-radius:var(--r-md)}
+  .sports{grid-template-columns:1fr 1fr}
+  .sport{flex-direction:column;align-items:flex-start;gap:8px;padding:12px;font-size:.9rem;min-height:92px}
+  .seg button{flex:1 1 auto}
+  .two{grid-template-columns:1fr}
+  .help{flex-direction:column;align-items:stretch}
+  .help .btn,.path .btn{width:100%}
+  .need li{flex-direction:column;gap:2px}
+  .card{padding:18px}
+  dialog{width:100%;max-width:none;border-radius:20px 20px 0 0;margin:auto 0 0;max-height:92%}
+}
+/* playful colour layer */
+.logo{background:linear-gradient(135deg,#7fb3ea,#a99be6)}
+.stats{border-top:none;padding-top:0;gap:10px}
+.stat{padding:10px 16px;border-radius:var(--r-md)}
+.stat:nth-child(1){background:var(--sky)}.stat:nth-child(2){background:var(--mint)}.stat:nth-child(3){background:var(--rose)}
+.stat small{color:var(--ink);opacity:.75}
+.q:nth-child(1) .num{background:var(--sky);color:var(--sky-i)}
+.q:nth-child(2) .num{background:var(--mint);color:var(--mint-i)}
+.q:nth-child(3) .num{background:var(--peach);color:var(--peach-i)}
+.sport{border:none;min-height:60px}
+.sport .ic{background:rgba(255,255,255,.65)!important}
+.sport:hover{filter:brightness(.98)}
+.sport[aria-pressed="true"]{background:inherit;box-shadow:0 0 0 2.5px var(--ink);border:none}
+.road{border-left-color:var(--line)}
+.road li:nth-child(1)::before{background:var(--sky);border-color:var(--sky-i)}
+.road li:nth-child(2)::before{background:var(--mint);border-color:var(--mint-i)}
+.road li:nth-child(3)::before{background:var(--peach);border-color:var(--peach-i)}
+.list .prog{box-shadow:inset 5px 0 0 var(--pc,var(--sky))}
+.list .prog:nth-child(5n+1){--pc:var(--sky)}.list .prog:nth-child(5n+2){--pc:var(--mint)}.list .prog:nth-child(5n+3){--pc:var(--peach)}.list .prog:nth-child(5n+4){--pc:var(--lilac)}.list .prog:nth-child(5n+5){--pc:var(--rose)}
+.prog{padding-left:22px}
+.need{border:none}
+.paths .path:nth-child(1) .n{background:var(--sky);color:var(--sky-i)}
+.paths .path:nth-child(2) .n{background:var(--mint);color:var(--mint-i)}
+.paths .path:nth-child(3) .n{background:var(--peach);color:var(--peach-i)}
+.help{background:var(--butter)}
+.help p{color:var(--ink);opacity:.8}
+.note-box{background:var(--lilac)}
+.g-item[open] summary{background:var(--g,transparent);border-radius:var(--r-md) var(--r-md) 0 0}
+.item{padding:0;overflow:hidden;gap:0}
+.item .top{padding:18px 16px;background:var(--ic-bg)}
+.item .top .big-ic{background:rgba(255,255,255,.7)!important}
+.item h3,.item p{padding:0 16px}
+.item h3{padding-top:14px}
+.item p{padding-top:4px}
+.item .btn{margin:14px 16px 16px}
+.next li:nth-child(1)::before{background:var(--sky);color:var(--sky-i)}
+.next li:nth-child(2)::before{background:var(--mint);color:var(--mint-i)}
+.next li:nth-child(3)::before{background:var(--peach);color:var(--peach-i)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (prefers-contrast:more){:root{--line:#7a8296;--muted:#2f3747}}
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="wrap bar">
+  <div class="bar">
     <a class="brand" href="#find" aria-label="SportAble home">
       <span class="logo" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V5"/><path d="M4 5h11l-2 3.5L15 12H4"/></svg></span>
-      SportAble <span style="color:var(--muted);font-weight:500">Calgary</span>
+      <span>SportAble <small>Calgary</small></span>
     </a>
-    <nav class="tabs" aria-label="Sections">
-      <a href="#find" data-view="find">Find a sport</a>
-      <a href="#guide" data-view="guide">Equipment guide</a>
-      <a href="#library" data-view="library">Library</a>
-      <a href="#donate" data-view="donate">Donate</a>
-    </nav>
-    <button class="tool" id="bigText" aria-pressed="false">Larger text</button>
+    <button class="tool" id="bigText" aria-pressed="false" aria-label="Larger text">Aa Larger text</button>
   </div>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#find" data-view="find">Find a sport</a>
+    <a href="#guide" data-view="guide">Equipment guide</a>
+    <a href="#library" data-view="library">Lending library</a>
+    <a href="#donate" data-view="donate">Donate gear</a>
+  </nav>
 </header>
-<div class="demo-note" role="note"><div class="wrap"><b>Hackathon demo.</b> Listings come from public program pages and may be out of date. Forms here don't send anything.</div></div>
 
 <main class="wrap">
+<p class="demo-note" role="note"><b>Hackathon demo.</b> Listings come from public program pages and may be out of date. Forms don't send anything.</p>
 
 <!-- FIND -->
 <div class="view" id="v-find">
   <div class="hero">
-    <div>
-      <h1>Adaptive sport in Calgary, <span>in three steps.</span></h1>
-      <p class="lead">Pick a sport. Tell us if you need equipment. We'll show you where to try it, where to borrow gear, and who can help pay for it. Built for athletes with disabilities and the people who support them.</p>
-    </div>
-    <div class="facts" aria-label="Why this matters">
-      <div class="fact"><b>$2,000+</b><small>Starting cost of a school sport wheelchair</small></div>
-      <div class="fact"><b>$12,000+</b><small>Cost of a wheelchair rugby chair</small></div>
-      <div class="fact"><b>$1,000+</b><small>Cost of a para hockey sled</small></div>
-      <div class="fact"><b>1 place</b><small>To find programs, gear and funding together</small></div>
+    <h1>Adaptive sport in Calgary, <span>in three steps.</span></h1>
+    <p class="lead">Pick a sport and tell us if you need equipment. We'll show you where to try it, where to borrow gear, and who to call. Built for athletes with disabilities and the people who support them.</p>
+    <div class="stats" aria-label="Typical equipment costs">
+      <div class="stat"><b>$2,000+</b><small>School sport wheelchair</small></div>
+      <div class="stat"><b>$1,000+</b><small>Para hockey sled</small></div>
+      <div class="stat"><b>$12,000+</b><small>Wheelchair rugby chair</small></div>
     </div>
   </div>
 
-  <div class="steps">
-    <section class="card" aria-labelledby="s1">
-      <div class="step-h"><span class="num">1</span><div><h2 id="s1">About you</h2><p>So we can show programs that fit.</p></div></div>
+  <div class="panel">
+    <section class="q" aria-labelledby="s1">
+      <div class="q-h"><span class="num">1</span><div><h2 id="s1">About you</h2></div></div>
       <div class="row">
         <div class="group"><span id="lbl-who">I'm looking for</span>
           <div class="seg" role="group" aria-labelledby="lbl-who" data-key="who">
@@ -265,70 +342,62 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
           </div></div>
         <div class="group"><span id="lbl-age">Age group</span>
           <div class="seg" role="group" aria-labelledby="lbl-age" data-key="age">
-            <button aria-pressed="false" data-val="kid">Child (under 13)</button>
-            <button aria-pressed="true" data-val="teen">Teen (13 to 17)</button>
-            <button aria-pressed="false" data-val="adult">Adult (18+)</button>
+            <button aria-pressed="false" data-val="kid">Under 13</button>
+            <button aria-pressed="true" data-val="teen">13 to 17</button>
+            <button aria-pressed="false" data-val="adult">18+</button>
           </div></div>
       </div>
     </section>
-
-    <section class="card" aria-labelledby="s2">
-      <div class="step-h"><span class="num">2</span><div><h2 id="s2">Which sport interests you?</h2><p>Not sure yet? Pick one to explore. You can switch anytime.</p></div></div>
+    <section class="q" aria-labelledby="s2">
+      <div class="q-h"><span class="num">2</span><div><h2 id="s2">Pick a sport</h2><p>Not sure yet? Pick one to explore. You can switch anytime.</p></div></div>
       <div class="sports" id="sports"></div>
     </section>
-
-    <section class="card" aria-labelledby="s3">
-      <div class="step-h"><span class="num">3</span><div><h2 id="s3">Do you need equipment?</h2><p>Most programs lend gear for your first sessions.</p></div></div>
+    <section class="q" aria-labelledby="s3">
+      <div class="q-h"><span class="num">3</span><div><h2 id="s3">Do you need equipment?</h2><p>Most programs lend gear for your first sessions.</p></div></div>
       <div class="seg" role="group" aria-labelledby="s3" data-key="gear">
-        <button aria-pressed="true" data-val="yes">Yes, I need equipment</button>
+        <button aria-pressed="true" data-val="yes">Yes</button>
         <button aria-pressed="false" data-val="own">I have my own</button>
         <button aria-pressed="false" data-val="unsure">Not sure</button>
       </div>
     </section>
-
-    <section class="card" id="result" aria-live="polite" aria-labelledby="r-title"></section>
   </div>
+
+  <section id="result" aria-live="polite" aria-labelledby="r-title"></section>
 </div>
 
 <!-- GUIDE -->
 <div class="view" id="v-guide" hidden>
-  <div class="hero" style="grid-template-columns:1fr">
-    <div>
+  <div class="hero">
       <h1>Know your gear <span>before you borrow or buy.</span></h1>
       <p class="lead">What each piece of adaptive equipment does, how it should fit, what to check on used gear, and who in Calgary to call. A coach or seating specialist should always do the final fitting.</p>
-    </div>
   </div>
   <div class="guide" id="guide"></div>
-  <section class="card" style="margin-top:22px" aria-labelledby="dir-t">
-    <h2 id="dir-t" style="font-size:1.2rem;letter-spacing:-.015em;margin-bottom:6px">Equipment contacts in one place</h2>
-    <p class="fine" style="margin-bottom:14px">Numbers from each organization's public pages. Call ahead, since programs change by season.</p>
-    <div class="contacts" id="directory" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))"></div>
+  <section class="dir" aria-labelledby="dir-t">
+    <div class="sec-h"><h3 id="dir-t">All equipment contacts</h3></div>
+    <div class="contacts" id="directory"></div>
+    <p class="fine">Numbers from each organization's public pages. Call ahead, since programs change by season.</p>
   </section>
 </div>
 
 <!-- LIBRARY -->
 <div class="view" id="v-library" hidden>
-  <div class="hero" style="grid-template-columns:1fr">
-    <div>
+  <div class="hero">
       <h1>Borrow the gear. <span>Keep playing.</span></h1>
       <p class="lead">Once SportAble is funded, we'll run a lending library of donated adaptive equipment. Players borrow for a season with simple proof of need. The items below show how it will look.</p>
-    </div>
   </div>
-  <p class="fine" style="margin-bottom:12px">Example inventory for the demo.</p>
+  <p class="fine">Example inventory for the demo.</p>
   <div class="lib" id="lib"></div>
 </div>
 
 <!-- DONATE -->
 <div class="view" id="v-donate" hidden>
-  <div class="hero" style="grid-template-columns:1fr">
-    <div>
+  <div class="hero">
       <h1>Your old chair could be <span>someone's first game.</span></h1>
       <p class="lead">Adaptive sport equipment is expensive and hard to find used. If you have gear you've outgrown or stopped using, we'll check it, clean it and match it to a Calgary player who needs it.</p>
-    </div>
   </div>
   <div class="don">
     <section class="card" aria-labelledby="d-title">
-      <h2 id="d-title" style="font-size:1.25rem;letter-spacing:-.015em;margin-bottom:14px">Donate equipment</h2>
+      <h2 id="d-title">Donate equipment</h2>
       <form id="donForm" novalidate>
         <label for="d-item">What are you donating?
           <select id="d-item" required>
@@ -374,19 +443,19 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:.85rem}
         <p class="status" id="d-ok" hidden></p>
       </form>
     </section>
-    <div style="display:grid;gap:18px">
+    <div style="display:grid;gap:16px">
       <section class="card" aria-labelledby="need-t">
-        <h2 id="need-t" style="font-size:1.05rem;margin-bottom:12px">Most needed right now</h2>
+        <h2 id="need-t">Most needed right now</h2>
         <div class="needs">
-          <span class="tag blue">Youth sport wheelchairs</span>
-          <span class="tag" style="background:var(--mint);color:var(--mint-i)">Para hockey sleds and sticks</span>
-          <span class="tag" style="background:var(--lilac);color:var(--lilac-i)">Boccia ramps</span>
-          <span class="tag" style="background:var(--peach);color:var(--peach-i)">Handcycles</span>
+          <span class="chip" style="background:var(--sky);color:var(--sky-i)">Youth sport wheelchairs</span>
+          <span class="chip" style="background:var(--mint);color:var(--mint-i)">Para hockey sleds and sticks</span>
+          <span class="chip" style="background:var(--lilac);color:var(--lilac-i)">Boccia ramps</span>
+          <span class="chip" style="background:var(--peach);color:var(--peach-i)">Handcycles</span>
         </div>
-        <p class="fine" style="margin-top:10px">Example list for the demo.</p>
+        <p class="fine">Example list for the demo.</p>
       </section>
       <section class="card" aria-labelledby="next-t">
-        <h2 id="next-t" style="font-size:1.05rem;margin-bottom:14px">What happens next</h2>
+        <h2 id="next-t">What happens next</h2>
         <ol class="next">
           <li><span>We reply within a week to confirm the item and arrange drop-off or pickup.</span></li>
           <li><span>A partner technician checks safety, cleans it and records the size.</span></li>
@@ -565,15 +634,14 @@ const $=s=>document.querySelector(s);
 const ageLabel={kid:"children",teen:"teens",adult:"adults"};
 
 function renderSports(){
-  $("#sports").innerHTML=S.map(s=>`<button class="sport" style="background:var(--${s.c})" aria-pressed="${s.id===st.sport}" data-id="${s.id}"><span class="ic" style="color:var(--${s.c}-i)">${ico(s.ic)}</span><b>${s.name}</b></button>`).join("");
+  $("#sports").innerHTML=S.map(s=>`<button class="sport" style="background:var(--${s.c})" aria-pressed="${s.id===st.sport}" data-id="${s.id}"><span class="ic" style="color:var(--${s.c}-i)">${ico(s.ic)}</span><span>${s.name}</span></button>`).join("");
 }
-
 function tel(n){return n.replace(/[^0-9]/g,"")}
 function contactLinks(o){
   const l=[];
   if(o.phone) l.push(`<a class="call" href="tel:+1${tel(o.phone)}">${ico("phone")}<span>${o.phone}</span></a>${o.phoneNote?`<span class="pn">${o.phoneNote}</span>`:""}`);
   if(o.email) l.push(`<span class="mail">${ico("mail")}<span>${o.email}</span></span>`);
-  if(o.url) l.push(`<a href="${o.url}" target="_blank" rel="noopener">Visit website</a>`);
+  if(o.url) l.push(`<a class="web" href="${o.url}" target="_blank" rel="noopener">Website ↗</a>`);
   return l;
 }
 function cCard(k){
@@ -582,28 +650,23 @@ function cCard(k){
 }
 function progCard(id){
   const p=P[id], fits=p.ages.includes(st.age);
-  const tags=[`<span class="tag ${fits?"ok":""}">${fits?"Fits your age group":"Check age range"}</span>`,`<span class="tag ${p.costK}">${p.cost}</span>`,`<span class="tag blue">${p.gear}</span>`];
-  if(p.note) tags.push(`<span class="tag">${p.note}</span>`);
+  const chips=[`<span class="chip ${p.costK}">${p.cost}</span>`,`<span class="chip">${p.gear}</span>`];
+  if(!fits) chips.unshift(`<span class="chip warn">Check age range</span>`);
   const links=contactLinks(p);
-  return {fits,html:`<article class="prog"><div><h3>${p.name}</h3><div class="org">${p.org}</div></div><p>${p.what}</p><div class="tags">${tags.join("")}</div>${links.length?`<div class="links">${links.join("")}</div>`:""}</article>`};
+  return {fits,html:`<article class="prog"><div><h4>${p.name}</h4><div class="org">${p.org}${p.note?` · ${p.note}`:""}</div></div><p class="desc">${p.what}</p><div class="meta">${chips.join("")}</div>${links.length?`<div class="links">${links.join("")}</div>`:""}</article>`};
 }
-
 function gearPanel(s){
   const provided=s.prog.filter(id=>/provided|Rental/i.test(P[id].gear)).map(id=>P[id].org);
-  if(st.gear==="own") return `<div class="gear" style="background:var(--mint);color:var(--mint-i)"><h3 style="color:var(--ink)">You're set</h3><p style="color:var(--ink)">Bring your own equipment to any program listed. If it needs a tune-up or a better fit, ask the program coach or Wheelchair Sports Alberta.</p></div>`;
-  if(st.gear==="unsure") return `<div class="gear" style="background:var(--lilac);color:var(--lilac-i)"><h3 style="color:var(--ink)">Start with a try-it session</h3><p style="color:var(--ink)">${provided.length?`${provided.join(", ")} provide${provided.length===1?"s":""} equipment, so you can try ${s.name.toLowerCase()} before deciding what to get.`:"Ask the program what equipment they can lend for your first session."}</p></div>`;
-  return `<div class="gear" style="background:var(--${s.c});color:var(--${s.c}-i)">
-    <h3 style="color:var(--ink)">What you'll need</h3>
-    <ul>${s.gear.map(g=>`<li><span>${g[0]}</span><span>${g[1]}</span></li>`).join("")}</ul>
-    <p class="fine" style="color:var(--ink);opacity:.75">Dollar amounts: ${COST}.</p>
-  </div>
-  <div class="src">
-    <div><b>1. Try program equipment first</b><p>${provided.length?provided.join(", ")+" provide"+(provided.length===1?"s":"")+" gear for sessions.":"Ask the program what they can lend."}</p></div>
-    ${(SG[s.id]||[]).map(g=>`<div style="background:var(--${G[g].c});border-color:transparent"><b>2. Read the ${G[g].name.toLowerCase()} guide</b><p style="color:var(--ink)">How it should fit, what to check on used gear, and who to call.</p><button class="btn" style="margin-top:10px" data-guide="${g}">Open the guide</button></div>`).join("")}
-    <div style="background:var(--accent-soft);border-color:transparent"><b>3. Borrow from SportAble</b><p style="margin-bottom:10px">Our lending library of donated gear, coming once funded.</p><button class="btn" data-borrow="${s.gear[0][0]}">Request to borrow</button></div>
-  </div>
-  <h3 class="sub-h" style="margin-top:8px">Who to call</h3>
-  <div class="contacts">${callList(s).map(cCard).join("")}</div>`;
+  if(st.gear==="own") return `<div class="note-box"><b>You're set</b>Bring your own equipment to any program listed. For a tune-up or better fit, ask the program coach.</div>`;
+  if(st.gear==="unsure") return `<div class="note-box"><b>Start with a try-it session</b>${provided.length?`${provided.join(", ")} provide${provided.length===1?"s":""} equipment, so you can try before deciding what to get.`:"Ask the program what equipment they can lend for your first session."}</div>`;
+  const guides=(SG[s.id]||[]);
+  return `<div class="need" style="background:var(--${s.c})"><ul>${s.gear.map(g=>`<li><span>${g[0]}</span><span>${g[1]}</span></li>`).join("")}</ul></div>
+  <p class="fine">${COST}.</p>
+  <div class="paths">
+    <div class="path"><span class="n">1</span><div><b>Try program equipment first</b><p>${provided.length?provided.join(", ")+" provide"+(provided.length===1?"s":"")+" gear for sessions.":"Ask the program what they can lend."}</p></div></div>
+    ${guides.map(g=>`<div class="path"><span class="n">2</span><div><b>Read the ${G[g].name.toLowerCase()} guide</b><p>How it should fit, what to check on used gear, and who to call.</p><button class="btn ghost" data-guide="${g}">Open the guide</button></div></div>`).join("")}
+    <div class="path"><span class="n">${guides.length?3:2}</span><div><b>Borrow from SportAble</b><p>Our lending library of donated gear, coming once funded.</p><button class="btn" data-borrow="${s.gear[0][0]}">Request to borrow</button></div></div>
+  </div>`;
 }
 function callList(s){
   const keys=new Set();
@@ -612,29 +675,25 @@ function callList(s){
   keys.add("aadl");
   return [...keys];
 }
-
 function renderResult(){
   const s=S.find(x=>x.id===st.sport);
   const cards=s.prog.map(progCard).sort((a,b)=>b.fits-a.fits);
-  const nFit=cards.filter(c=>c.fits).length;
-  const gearStep={yes:"We list gear, costs and ways to borrow.",own:"Bring your own to any program.",unsure:"Try program gear first."}[st.gear];
-  const forWhom=st.who==="care"?`for the ${st.age==="adult"?"adult":st.age==="kid"?"child":"teen"} you support`:"for you";
+  const forWhom=st.who==="care"?"the person you support":"you";
   $("#result").innerHTML=`<div class="fade">
-   <div class="result-head">
+   <div class="r-head">
      <div class="big-ic" style="background:var(--${s.c});color:var(--${s.c}-i)">${ico(s.ic)}</div>
-     <div><h2 id="r-title">Your roadmap: ${s.name}</h2><p>${s.blurb}</p></div>
-     <a class="btn ghost" href="#donate">Have gear to give?</a>
+     <div><div class="eyebrow">Your roadmap</div><h2 id="r-title">${s.name}</h2></div>
    </div>
-   <div class="road">
-     <div class="road-step"><div class="k">Step 1 · Try it</div><b>${s.prog.length} place${s.prog.length>1?"s":""} to play</b><p>${nFit} list${nFit===1?"s":""} programs for ${ageLabel[st.age]}.</p></div>
-     <div class="road-step"><div class="k">Step 2 · Gear up</div><b>${st.gear==="yes"?"Equipment options":st.gear==="own"?"Using your own":"Try before you buy"}</b><p>${gearStep}</p></div>
-     <div class="road-step"><div class="k">Step 3 · Keep playing</div><b>Join a club or team</b><p>Ask your first program about regular sessions.</p></div>
-   </div>
-   <div class="cols">
-     <div><h3 class="sub-h">Where to play <small>Picked ${forWhom}</small></h3><div class="list">${cards.map(c=>c.html).join("")}</div></div>
-     <div><h3 class="sub-h">Equipment</h3><div style="display:grid;gap:12px">${gearPanel(s)}</div></div>
-   </div>
-   <div class="help"><div><b>Want to talk it through with a person?</b><br>Calgary Adapted Hub offers a free one-on-one program navigation call for families.</div><a class="btn" href="https://www.calgaryadaptedhub.com" target="_blank" rel="noopener" style="background:var(--mint-i);color:var(--surface)">Visit Calgary Adapted Hub</a></div>
+   <p class="r-blurb">${s.blurb}</p>
+   <ol class="road">
+     <li><b>Try it</b><span>${s.prog.length} place${s.prog.length>1?"s":""} in and near Calgary, picked for ${forWhom}.</span></li>
+     <li><b>Gear up</b><span>${st.gear==="yes"?"See what you need, what it costs and how to borrow it.":st.gear==="own"?"Bring your own to any program.":"Use program gear first, then decide."}</span></li>
+     <li><b>Keep playing</b><span>Ask your first program about joining regular sessions or a team.</span></li>
+   </ol>
+   <div class="sec"><div class="sec-h"><h3>Where to play</h3><small>${s.prog.length} option${s.prog.length>1?"s":""}</small></div><div class="list">${cards.map(c=>c.html).join("")}</div></div>
+   <div class="sec"><div class="sec-h"><h3>Equipment</h3></div>${gearPanel(s)}</div>
+   ${st.gear==="yes"?`<div class="sec"><div class="sec-h"><h3>Who to call</h3></div><div class="contacts">${callList(s).map(cCard).join("")}</div></div>`:""}
+   <div class="help"><div><b>Want to talk it through with a person?</b><p>Calgary Adapted Hub offers free one-on-one program navigation for families.</p></div><a class="btn" href="https://www.calgaryadaptedhub.com" target="_blank" rel="noopener">Visit Calgary Adapted Hub</a></div>
   </div>`;
 }
 
@@ -649,21 +708,18 @@ const LIB=[
  ["Racing wheelchair","wheel","sky","Three-wheel racing chair, adult size.","Needed","off"]
 ];
 function renderLib(){
-  $("#lib").innerHTML=LIB.map(([n,ic,c,d,stt,k])=>`<article class="item"><div class="pic" style="background:var(--${c});color:var(--${c}-i)">${ico(ic)}</div><div class="body"><div class="tags"><span class="tag ${k}">${stt}</span></div><h3>${n}</h3><p>${d}</p>${stt==="Needed"?`<a class="btn ghost" href="#donate">Donate one</a>`:`<button class="btn ${stt==="On loan"?"ghost":""}" data-borrow="${n}">${stt==="On loan"?"Join waitlist":"Request to borrow"}</button>`}</div></article>`).join("");
+  $("#lib").innerHTML=LIB.map(([n,ic,c,d,stt,k])=>`<article class="item"><div class="top" style="--ic-bg:var(--${c})"><span class="big-ic" style="color:var(--${c}-i)">${ico(ic)}</span><span class="chip ${k}">${stt}</span></div><h3>${n}</h3><p>${d}</p>${stt==="Needed"?`<a class="btn ghost" href="#donate">Donate one</a>`:`<button class="btn ${stt==="On loan"?"ghost":""}" data-borrow="${n}">${stt==="On loan"?"Join waitlist":"Request to borrow"}</button>`}</article>`).join("");
 }
-
 function renderGuide(){
-  $("#guide").innerHTML=Object.entries(G).map(([k,g])=>`<details class="g-item" id="g-${k}">
-    <summary><span class="big-ic" style="background:var(--${g.c});color:var(--${g.c}-i)">${ico(g.ic)}</span><span><h3>${g.name}</h3><p>${g.sub}</p></span><span class="chev" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+  $("#guide").innerHTML=Object.entries(G).map(([k,g])=>`<details class="g-item" id="g-${k}" style="--g:var(--${g.c})">
+    <summary><span class="big-ic" style="background:var(--${g.c});color:var(--${g.c}-i)">${ico(g.ic)}</span><span class="t"><h3>${g.name}</h3><p>${g.sub}</p></span><span class="chev" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></summary>
     <div class="g-body">
-      <p class="g-what">${g.what}</p>
-      <span class="g-cost" style="background:var(--${g.c});color:var(--${g.c}-i)">Typical cost: ${g.cost}</span>
-      <div class="g-grid">
-        <div class="g-box"><h4>How it should fit</h4><ul>${g.fit.map(x=>`<li>${x}</li>`).join("")}</ul></div>
-        <div class="g-box"><h4>Checking used or borrowed gear</h4><ul>${g.used.map(x=>`<li>${x}</li>`).join("")}</ul></div>
-      </div>
+      <p>${g.what}</p>
+      <p class="g-cost">Typical cost: <b>${g.cost}</b></p>
+      <div><h4>How it should fit</h4><ul>${g.fit.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+      <div><h4>Checking used or borrowed gear</h4><ul>${g.used.map(x=>`<li>${x}</li>`).join("")}</ul></div>
       <div class="g-start"><b>Where to start:</b> ${g.start}</div>
-      <div><h4 style="margin:0 0 8px;font-size:.92rem">Who to call</h4><div class="contacts">${g.call.map(cCard).join("")}</div></div>
+      <div><h4>Who to call</h4><div class="contacts">${g.call.map(cCard).join("")}</div></div>
     </div>
   </details>`).join("");
   $("#directory").innerHTML=Object.keys(C).map(cCard).join("");

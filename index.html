@@ -18,6 +18,7 @@
 <meta name="twitter:description" content="Adaptive sport in Calgary, in three steps.">
 <meta name="twitter:image" content="https://tom-kurian7.github.io/sportable/og-image.png">
 <meta name="theme-color" content="#2f5f8e">
+<meta name="color-scheme" content="light only">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237fb3ea'/%3E%3Cstop offset='1' stop-color='%23a99be6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M10 25V8h13l-2.5 4.5L23 17H10' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 /* Layout idea: one calm column of content on a soft background. Pastel only on icons and small highlights; one deep blue for every action. */
@@ -30,24 +31,6 @@
   --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --r-lg:20px; --r-md:14px; --r-sm:10px;
   color-scheme:light;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#12161d; --surface:#1a1f28; --ink:#edf0f5; --muted:#a3abba; --faint:#7c8596; --line:#272e3a;
-    --accent:#93bbe6; --accent-ink:#0f1a28; --accent-soft:#1e2c3e;
-    --sky:#1d2e42; --sky-i:#a9cdf2; --mint:#1b3529; --mint-i:#9fdcbf; --peach:#3a281f; --peach-i:#f3bf9f;
-    --lilac:#29243f; --lilac-i:#c8b9f2; --butter:#33301f; --butter-i:#ead98f; --rose:#38232d; --rose-i:#f0aec2;
-    --ok:#9fdcbf; --ok-bg:#1b3529; --warn:#ecc77a; --warn-bg:#33301f; --off:#a3abba; --off-bg:#232a35;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#12161d; --surface:#1a1f28; --ink:#edf0f5; --muted:#a3abba; --faint:#7c8596; --line:#272e3a;
-  --accent:#93bbe6; --accent-ink:#0f1a28; --accent-soft:#1e2c3e;
-  --sky:#1d2e42; --sky-i:#a9cdf2; --mint:#1b3529; --mint-i:#9fdcbf; --peach:#3a281f; --peach-i:#f3bf9f;
-  --lilac:#29243f; --lilac-i:#c8b9f2; --butter:#33301f; --butter-i:#ead98f; --rose:#38232d; --rose-i:#f0aec2;
-  --ok:#9fdcbf; --ok-bg:#1b3529; --warn:#ecc77a; --warn-bg:#33301f; --off:#a3abba; --off-bg:#232a35;
-  color-scheme:dark;
 }
 html{font-size:100%;-webkit-text-size-adjust:100%}
 html.big{font-size:118%}
